@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>a2.4</title>
+    <style>
+        #ring{
+            background-color: #b2d6d1;
+        }
+        #form{
+            background-color: white;
+            margin: auto;
+            width:90%;
+        }
+        label{
+            display: block ;
+            float: bottom;
+            align-content: center;
+        }
+        input,
+        select{
+            margin: auto;
+            font-family: inherit;
+            font-size: inherit;
+            align-content: center;
+        }
+        h1, h2{
+            align-content: center;
+            text-align: center;
+        }
+        form{
+
+            vertical-align: middle;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div id="ring">
+    <h1> Survey Form </h1>
+
+
+    <div id="form">
+        <form >
+            <h2>Let us know how we can improve freeCodeCamp</h2>
+            <ul style="list-style: none">
+                <li>
+                    <label>* Name:
+                        <input type="text" placeholder="Enter your name"> <br>
+                    </label>
+                </li>
+                <br>
+                <li>
+                    <label>* Email:
+                        <input type="email" placeholder="Enter your email"> <br>
+                    </label>
+                </li>
+                <br>
+                <li>
+                    <label>* Age:
+                        <input type="number" placeholder="Age"> <br>
+                    </label>
+                </li>
+                <br>
+                <li>
+                    <label>Which option best describes your current role?
+                        <select>
+                            <option value="student">Student</option>
+                        </select> <br>
+                    </label>
+                </li>
+                <br>
+                <li>
+                    <label>How likely is that you would recommend freeCodeCamp to a friend?
+                        <input type="checkbox"> Definetly <br>
+                        <input type="checkbox"> Maybe<br>
+                        <input type="checkbox"> Not sure <br>
+                    </label>
+                </li>
+                <br>
+                <li>
+                    <label>What do you like most in FCC:
+                        <select name="dropdown2" >
+                            <option> Select an option</option>
+                        </select> <br>
+                    </label>
+                </li>
+                <br>
+                <li>
+                    <label>hings that should be improved in the future (Check all that apply):
+                        <input type="checkbox"> Front-end Projects <br>
+                        <input type="checkbox"> Back-end Projects <br>
+                        <input type="checkbox"> Data Visualization <br>
+                    </label>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+</body>
+</html>

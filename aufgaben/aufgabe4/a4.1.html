@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    function identity_function(arg) {
+        return function() {
+            return arg;
+        }
+    }
+
+    function addf(x) {
+        return function(y) {
+            return x + y;
+        }
+    }
+
+    function applyf(func) {
+        return function(arg1) {
+            return function(arg2) {
+                return func(arg1,arg2);
+            }
+        }
+    }
+
+
+    function curry(func, arg1) {
+        return function(arg2) {
+            return func(arg1, arg2);
+        }
+    }
+
+    function inc(x) {
+        return addf(x)(1);
+    }
+
+    function methodize(func) {
+        return function(y) {
+            return func(this,y);
+        }
+    }
+
+    function demethodize(method) {
+        return function(arg1, arg2) {
+            return method.call(arg1, arg2);
+        }
+    }
+
+    function twice(func) {
+        return function(arg) {
+            return func(arg,arg);
+        }
+    }
+
+    function composeu(func1, func2) {
+        return function(arg) {
+            return func2(func1(arg));
+        }
+    }
+
+    function once(func) {
+        var test = true;
+        if(test) {
+            test = false;
+            return function(arg1, arg2) {
+                func(arg1, arg2);
+            }
+        }
+        console.log("Fehler");
+    }
+
+    function counterf(arg) {
+        var counter = {};
+        counter.value = arg;
+        animal.inc = function() {
+            this.value++;
+            console.log(this.value);
+        }
+        animal.dec = function() {
+            this.value--;
+            console.log(this.value);
+        }
+        return counter;
+    }
+
+    function revocable(func) {
+        var test = true;
+        function invoke(arg1) {
+            if(test) {
+                return func(arg1);
+            }
+        }
+        function revoke() {
+            test = false;
+        }
+    }
+
+</script>
+
+</body>
+</html>
