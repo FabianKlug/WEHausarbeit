@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+
+    </style>
+</head>
+<body>
+
+<h2>Async Await -Ding</h2>
+
+<button type="button" onclick="loadDoc()">Nalos! </button>
+
+<p id="demo"></p>
+
+<script>
+    async function loadDoc() {
+        await Promise.all([
+            fetch('./A.txt')
+                .then(x => x.text()),
+            fetch('./B.txt')
+                .then(x => x.text())
+        ]).then(([ersteResp, zweiteResp]) => {
+            let max;
+            if(ersteResp.length >= zweiteResp.length) {
+                max = ersteResp.length;
+            } else {
+                max = zweiteResp.length;
+            }
+            for(let i = 0; i < ersteResp.split("\n").length; i++) {
+                if (ersteResp.split("\n")[i]) {
+                    console.log(ersteResp.split("\n")[i]);
+                }
+                if (zweiteResp.split("\n")[i]) {
+                    console.log(zweiteResp.split("\n")[i]);
+                }
+            }
+        });
+    }
+</script>
+
+
+
+</body>
+</html>
