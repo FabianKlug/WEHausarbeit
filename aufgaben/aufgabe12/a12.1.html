@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +7,36 @@
     <title>Title</title>
 </head>
 <body>
+    <form method="post">
+        <fieldset>
+        <h1>Registrierung</h1>
+
+        <label> Username
+            <br>
+            <input type="text" id="username">
+            <br>
+        </label>
+        <label> Passwort
+            <br>
+            <input type="text" id="pw">
+        </label>
+        <button id="reg"> Registrieren </button>
+
+        </fieldset>
+
+        <?PHP
+            if ( isset($_POST[ 'username' ]) && isset($_POST[ 'pw' ]) ){
+                $username = $_POST[ 'pw' ];
+                $pw = $_POST[ 'pw' ];
+                $file = './passwords.csv';
+                $new_line = $username . ',' . $pw . "\n";
+                if ( file_put_contents( $file, $new_line, FILE_APPEND | LOCK_EX ) ){
+                    echo 'test';
+                }
+            }
+        ?>
+
+    </form>
 
 </body>
 </html>

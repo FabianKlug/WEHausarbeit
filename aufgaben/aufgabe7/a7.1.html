@@ -2,9 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Title </title>
 </head>
 <body>
+
+
+<h1> Lit-Counter</h1>
+<lit-counter start="0" limit="79">
+
+</lit-counter>
+
+
+<script type="module">
+    import { LitElement, html } from 'https://unpkg.com/lit-element?module';
+    class LitCounter extends LitElement {
+        constructor() {
+            super();
+            this.col = "black";
+        }
+        static get properties() {
+            return {
+                start: Number,
+                limit : Number,
+                col: String
+            }
+        }
+        render() {
+            return html`
+                    <output> ${this.start}  </output>
+                    <button style="color: ${this.col}" @click="${this.hoch}">  Alge Alge Alge</button>
+                `;
+        }
+        hoch() {
+            if(this.start != this.limit) {
+                this.start++;
+            } else {
+                this.col = "red";
+                alert("Limit erreicht")
+            }
+        }
+
+    }
+    customElements.define('lit-counter', LitCounter);
+</script>
+
+
 
 </body>
 </html>

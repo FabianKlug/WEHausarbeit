@@ -2,9 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Rednerliste</title>
 </head>
-<body>
 
+<body>
+    <h1>Rednerliste</h1>
+    <label>Neuer Redner:
+
+        <input type="text">
+    </label>
+
+    <button>Hinzufügen</button>
+    <ul></ul>
+
+    <script>
+        const ul = document.querySelector("ul");
+        const input = document.querySelector("input");
+        const button = document.querySelector("button");
+        button.addEventListener("click", meineFunk);
+
+        function meineFunk() {
+            //stop the timer of the old Redner
+            resetButtons();
+
+            //create new Redner
+            const neuerRedner = document.createElement("li");
+
+            neuerRedner.innerHTML = `${input.value}
+                <span id="stunde">00</span>:<span id="minute">00</span>:<span id="sekunde">00</span> <button>Stopp!</button>`;
+
+            let sek = 0,
+                min = 0,
+                stu = 0;
+
+            let run = true;
+
+            let stunden = neuerRedner.querySelectorAll("span")[0];
+            let minuten = neuerRedner.querySelectorAll("span")[1];
+            let sekunden = neuerRedner.querySelectorAll("span")[2];
+            let reset = true;
+
+            let timer = setInterval(timerUpdate, 1000);
+
+            const stopButton = neuerRedner.querySelector("button");
+
+            stopButton.addEventListener("click", function () {
+                resetButtons();
+                timerStart();
+            });
+            ul.appendChild(neuerRedner);
+            input.value = "";
+            input.focus();
+
+            function timerUpdate() {
+                sek++;
+                if(sek < 10)
+                    sekunden.innerHTML = "0" + sek;
+                else
+                    sekunden.innerHTML = "" + sek;
+
+                if(sek == 60) {
+                    sek = 0;
+                    sekunden.innerHTML = "0" + sek;
+                    min++;
+                    if(min < 10)
+                        minuten.innerHTML = "0" + min;
+                    else
+                        minuten.innerHTML = "" + min;
+
+                }
+                if (min == 60) {
+                    min = 0;
+                    minuten.innerHTML = "0" + min;
+                    stu++;
+                    if(stu < 10)
+                        stunden.innerHTML = "0" + stu;
+                    else
+                        stunden.innerHTML = "" + stu;
+
+                }
+            }
+
+            function timerStart() {
+                if(run) {
+                    clearInterval(timer);
+                    stopButton.innerHTML = "Start!";
+                    run = false;
+                } else {
+                    timer = setInterval(timerUpdate, 1000);
+                    stopButton.innerHTML = "Stopp!";
+                    run = true;
+                }
+            }
+
+            function resetButtons() {
+                reset = false;
+                let buttons = ul.querySelectorAll("button");
+                for(let buttonIndex = 0; buttonIndex < buttons.length; buttonIndex ++) {
+                    if(buttons[buttonIndex].innerHTML == "Stopp!") {
+                        buttons[buttonIndex].click();
+                    }
+                }
+                reset = true;
+            }
+        }
+
+    </script>
 </body>
 </html>

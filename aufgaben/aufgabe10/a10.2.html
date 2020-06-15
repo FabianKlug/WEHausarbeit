@@ -2,9 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title> A10.2 </title>
 </head>
 <body>
-
+<div id="menu">
+    <menu-component horizontal="true"></menu-component>
+    <menu-component></menu-component>
+</div>
 </body>
 </html>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+    Vue.component('menu-component', {
+        props: ['horizontal'],
+        template: '<div v-if=horizontal><button v-for="button in buttons" @click="doSomething(button.title)">{{button.title}}</button></div>' +
+            '<div v-else style="display:flex;flex-direction: column"><button v-for="button in buttons" @click="doSomething(button.title)">{{button.title}}</button></div>',
+        data: function() {
+            return {
+                buttons : [
+                    {id: 1, title: 'Home'},
+                    {id: 2, title: 'About'},
+                    {id: 3, title: 'Contact Us'},
+                ],
+            }
+        },
+        methods: {
+            doSomething: function(arg) {
+                console.log(arg);
+            }
+        }
+    });
+
+    new Vue({
+        el: '#menu'
+    })
+</script>

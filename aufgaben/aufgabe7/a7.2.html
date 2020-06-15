@@ -2,9 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Title </title>
+    <style>
+        * {
+            font-size: 30px;
+
+        }
+
+    </style>
 </head>
 <body>
+<lit-timer> </lit-timer>
+
+<script type="module">
+
+    import { LitElement, html, css} from 'https://unpkg.com/lit-element?module';
+    let stopwatch;
+    class LitTimer extends LitElement {
+
+        static get properties() {
+            return {
+                sec: Number,
+                min: Number
+            }
+        }
+        static get styles() {
+            return css`
+                    button {
+                        border-radius: 20px;
+                        font-size: 20px;
+                        border: none;
+                    }
+                    div {
+                        background-color: pink;
+                    }
+                `;
+        }
+        constructor() {
+            super();
+
+            this.sec = 0;
+            this.min = 0;
+        }
+
+        render() {
+            return html`
+                    <div>
+                        <h1> Lit-Stopwatch </h1>
+                        <output> ${this.min} : ${this.sec} </output> <br>
+                        <button id="start_button" @click="${this.start}"> Start </button>
+                        <button id="stop_button" @click="${this.stop}"> Stopp </button>
+
+                    </div>
+                    `;
+
+        }
+        start() {
+            stopwatch = setInterval(() => {
+                if(this.sec < 59) {
+                    this.sec++;
+                } else {
+                    this.sec = 0;
+                    this.min++;
+                }
+            },1000);
+        }
+        stop() {
+            clearInterval(stopwatch)
+            this.sec = 0;
+            this.min = 0;
+        }
+    }
+    customElements.define('lit-timer', LitTimer);
+
+</script>
+
 
 </body>
 </html>

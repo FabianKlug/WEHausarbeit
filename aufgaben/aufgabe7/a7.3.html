@@ -2,9 +2,162 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Title </title>
+    <style>
+        .mybutton {
+            border-radius: 12px;
+            color: black;
+            background-color: cornflowerblue;
+            border-color: white;
+            margin-right: 40px;
+            padding: 20px;
+
+        }
+
+        .grid-container {
+            display: grid;
+        }
+
+        .grid-item {
+            padding: 20px;
+            font-size: 30px;
+        }
+
+        .header {
+            grid-row: 1 / 2;
+            grid-column: 1 / span 5;
+            background-color: darkred;
+        }
+        .asideleft {
+            grid-row: 2 / 3;
+            grid-column: 1 / span 1;
+            font-size: 30px;
+            color: white;
+            background-color: indianred;
+            text-decoration: none;
+            color: inherit;
+            text-decoration-color: inherit;
+
+        }
+        .main {
+            grid-row: 2 / 3;
+            grid-column: 2 / span 2;
+            background-color: cornflowerblue;
+        }
+        .asideright {
+            grid-row: 2 / 3;
+            grid-column: 4 / span 1;
+            background-color: indianred;
+        }
+        .footer {
+            grid-row: 3 / 4;
+            grid-column: 1 / span 5;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+        }
+        a {
+            color: inherit;
+            text-decoration-color: inherit;
+
+        }
+        * {
+            box-sizing: border-box;
+            border-spacing: 20px;
+        }
+        label {
+            font-size: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            color: white;
+        }
+
+
+    </style>
 </head>
 <body>
+<h1> Lit-Menu </h1>
+<lit-menu vert="true">
+
+</lit-menu>
+
+<script type="module">
+    import { LitElement, html, css} from 'https://unpkg.com/lit-element?module';
+    class LitMenu extends LitElement {
+
+        constructor() {
+            super();
+            this.vert = true;
+        }
+
+        render() {
+            return html`
+                    <div class="grid-container">
+                        <div class ="grid-item header">
+                            <h2> WWW - Navigator </h2>
+                                <button class="mybutton" @click="${this.p1 }"> HTML </button>
+                                <button class="mybutton"  @click="${this.p2 }"> CSS </button>
+                                <button class="mybutton"  @click="${this.javascript }"> JavaScript </button>
+                                <button class="mybutton"  @click="${this.p4 }"> Other </button>
+                        </div>
+                        <div class ="grid-item asideleft" id="asideLeftFrame">
+
+                        </div>
+                        <div class ="grid-item main" datasrc="moin.html">
+
+                        </div>
+
+                        <div class ="grid-item asideright">
+                            Links zu Quellen
+                        </div>
+
+                        <div class ="grid-item footer">
+                            <label> Footer: </label> <a href=""> Sitemap</a>
+                            <a href=""> Home</a>
+                            <a href=""> News</a>
+                            <a href=""> Contact</a>
+                            <a href=""> About</a>
+                        </div>
+                    </div>
+
+                `;
+        }
+        p1() {
+            console.log("Punkt 1 aufgerufen");
+            //Im zweiten Container das Untermenü anzeigen
+            const containerleft = document.getElementById('asideLeftFrame');
+            containerleft.innerHTML = '<object type="text/html" data="./htmlmenu.html" ></object>';
+        }
+        p2() {
+            console.log("Punkt 2 aufgerufen");
+            //Im zweiten Container das Untermenü anzeigen
+            const containerleft = document.getElementById('asideLeftFrame');
+            containerleft.innerHTML = '<object type="text/html" data="./cssmenu.html" ></object>';
+        }
+        javascript() {
+            console.log("Punkt 3 aufgerufen");
+            //Im zweiten Container das Untermenü anzeigen
+            const containerleft = document.getElementById('asideLeftFrame');
+            containerleft.innerHTML = '<object type="text/html" data="./javascriptmenu.html" ></object>';
+
+        }
+        p4() {
+            console.log("Punkt 4 aufgerufen");
+            //Im zweiten Container das Untermenü anzeigen
+            const containerleft = document.getElementById('asideLeftFrame');
+            containerleft.innerHTML = '<object type="text/html" data="./othermenu.html" ></object>';
+        }
+
+    }
+    customElements.define('lit-menu', LitMenu);
+</script>
+
+
+
 
 </body>
 </html>

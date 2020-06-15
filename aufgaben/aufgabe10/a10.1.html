@@ -2,9 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Aufgabe 1.1 </title>
 </head>
 <body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<div id="myApp">
+    <button @click="increment"> + </button>
+    <button @click="decrement"> - </button>
+    <output name="ergebnis"> Counter: {{result}} </output>
+    <br>
+    <br>
+    <output name="clickanzahl"> Klickanzahl insgesamt: {{clicks}}</output>
+</div>
+
+<script>
+    new Vue({
+        el: '#myApp',
+        data: {
+            result: 0,
+            clicks: 0
+        },
+        methods: {
+            increment: function () {
+                this.result++;
+                this.clicks++;
+            },
+            decrement: function () {
+                this.clicks++;
+                this.result--;
+            }
+        }
+    });
+
+    const plus_button = document.getElementsByName("plus_button");
+    const minus_button = document.getElementById("minus_button");
+    plus_button.onclick = Vue.increment();
+
+</script>
 
 </body>
 </html>
