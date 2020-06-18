@@ -4,74 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Title </title>
+    <link href="../css/allgemein.css" rel="stylesheet" type="text/css">
     <style>
         * {
+            font-family: 'Roboto', sans serif;
             font-size: 30px;
 
+        }
+        div{
+            position: absolute;
+            top: 20%;
+            left: 30%;
         }
 
     </style>
 </head>
 <body>
-<lit-timer> </lit-timer>
+<div>
+    <lit-timer> </lit-timer>
+</div>
 
 <script type="module">
 
     import { LitElement, html, css} from 'https://unpkg.com/lit-element?module';
     let stopwatch;
+    let pause;
     class LitTimer extends LitElement {
 
         static get properties() {
             return {
                 sec: Number,
-                min: Number
+                min: Number,
+                start_disabled: Boolean,
+                stop_disabled: Boolean
             }
         }
         static get styles() {
             return css`
+                    *{
+                        font-family: 'Roboto', sans serif;
+                    }
                     button {
-                        border-radius: 20px;
                         font-size: 20px;
                         border: none;
+                        background-color: #3E5E69;
+                        color: white;
+                        font-size: 30px;
+                        margin-top: 10px;
+                        font-family: 'Roboto', sans serif;
                     }
-                    div {
-                        background-color: pink;
+                    button:hover{
+                        background-color: white;
+                        color: #3E5E69;
+                    }
+                    button:disabled{
+                        background-color: grey;
+                    }
+                    button:focus {
+                        outline:0;
+                    }
+                    h2{
+                        font-size: 15px;
+                    }
+                    klein{
+                        font-size: 20px;
+                    }
+                    output{
+                        position: absolute;
+                        left: 9%;
+                        font-size: 40px;
+                        padding-bottom: 10px;
                     }
                 `;
         }
         constructor() {
             super();
-
-            this.sec = 0;
-            this.min = 0;
+            this.sec = "00";
+            this.min = "00";
+            this.start_disabled = false;
+            this.stop_disabled = true;
         }
 
         render() {
             return html`
                     <div>
-                        <h1> Lit-Stopwatch </h1>
-                        <output> ${this.min} : ${this.sec} </output> <br>
-                        <button id="start_button" @click="${this.start}"> Start </button>
-                        <button id="stop_button" @click="${this.stop}"> Stopp </button>
+                        <h1> Lit-Element Stoppuhr <klein>(mit zusätzlichem Pause-Button)</klein></h1>
+
+                        <output> ${this.min} : ${this.sec} </output> <br> <br>
+                        <button id="start_button" @click="${this.start}" ?disabled=${this.start_disabled}> Start </button>
+                        <button id="pause_button" @click="${this.pause}" > Pause </button>
+                        <button id="stop_button" @click="${this.stop}" ?disabled=${this.stop_disabled}> Stopp </button>
 
                     </div>
                     `;
 
         }
         start() {
+            clearInterval(pause);
+            this.start_disabled = true;
+            this.stop_disabled = false;
+
             stopwatch = setInterval(() => {
+
                 if(this.sec < 59) {
-                    this.sec++;
+
+                    this.sec = parseInt(this.sec);
+
+                    if(this.sec<9){
+                        this.sec= "0"+ ++this.sec;
+                    } else {
+                        this.sec++;
+                    }
+
                 } else {
                     this.sec = 0;
-                    this.min++;
+                    this.min = "0"+ ++this.min;
                 }
             },1000);
         }
+        pause(){
+            clearInterval(stopwatch);
+            this.start_disabled = false;
+            pause = setInterval(()=>{
+                console.log("Pausiert")
+            }, 1000)
+        }
         stop() {
+            this.start_disabled = false;
+            this.stop_disabled = true;
             clearInterval(stopwatch)
-            this.sec = 0;
-            this.min = 0;
+            clearInterval(pause);
+            this.sec = "00";
+            this.min = "00";
         }
     }
     customElements.define('lit-timer', LitTimer);

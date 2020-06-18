@@ -4,48 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Title </title>
+    <link href="../css/allgemein.css" type="text/css" rel="stylesheet">
+    <style>
+        *{
+            padding: 5px 5px;
+        }
+        .container{
+            position: absolute;
+            top: 20%;
+            left: 30%;
+        }
+        h4{
+            padding-bottom: 20px;
+        }
+
+    </style>
 </head>
 <body>
 
+<div class="container">
+    <h1> Lit-Element Counter </h1>
+    <h4>(mit Limit und automatischem Reset)</h4>
+    <lit-counter start="0" limit="10">
 
-<h1> Lit-Counter</h1>
-<lit-counter start="0" limit="79">
-
-</lit-counter>
-
-
-<script type="module">
-    import { LitElement, html } from 'https://unpkg.com/lit-element?module';
-    class LitCounter extends LitElement {
-        constructor() {
-            super();
-            this.col = "black";
-        }
-        static get properties() {
-            return {
-                start: Number,
-                limit : Number,
-                col: String
+    </lit-counter>
+</div>
+    <script type="module">
+        import { LitElement, html } from 'https://unpkg.com/lit-element?module';
+        class LitCounter extends LitElement {
+            constructor() {
+                super();
+                this.col = "black";
             }
-        }
-        render() {
-            return html`
-                    <output> ${this.start}  </output>
-                    <button style="color: ${this.col}" @click="${this.hoch}">  Alge Alge Alge</button>
-                `;
-        }
-        hoch() {
-            if(this.start != this.limit) {
-                this.start++;
-            } else {
-                this.col = "red";
-                alert("Limit erreicht")
+            static get properties() {
+                return {
+                    start: Number,
+                    limit : Number,
+                    farbe: String
+                }
             }
-        }
+            render() {
+                return html`
+                        <style>
+                        *{
+                            font-family: 'Roboto', sans-serif;
+                            font-size: 20px;
+                            font-weight: bold;
+                            margin-right: 20px;
+                        }
+                        output{
+                            padding: 10px;
+                        }
+                        button{
+                            text-align: center;
+                            width: 100px;
+                            color: #3E5E69;
+                        }
+                        </style>
+                        <output> Zähler: ${this.start}  </output>
+                        <button id ="inkrementbutton" style="color: ${this.farbe}" @click="${this.hoch}">+1</button>
+                    `;
+            }
+            hoch() {
+                if(this.start < this.limit) {
+                    this.start++;
+                } else {
+                    this.farbe = "red";
+                    alert("Limit erreicht von " +this.limit + " erreicht! ")
+                    setTimeout(()=>
+                        this.farbe = "black",1500)
+                    this.start=0;
 
-    }
-    customElements.define('lit-counter', LitCounter);
-</script>
+
+                }
+            }
+
+        }
+        customElements.define('lit-counter', LitCounter);
+    </script>
 
 
 
