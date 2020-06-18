@@ -3,29 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Rednerliste</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="../css/a12.css" rel="stylesheet" type="text/css">
+    <style>
+        *{
+            font-family: 'Roboto', sans-serif;
+        }
+        div{
+            padding: 10px 10px;
+            position: absolute;
+            left: 50%;
+            top: 30%;
+        }
+    </style>
 </head>
 
 <body>
+<div>
     <h1>Rednerliste</h1>
+    <br>
     <label>Neuer Redner:
 
-        <input type="text">
+        <input type="text" required title="Geben Sie einen Namen ein">
     </label>
 
     <button>Hinzufügen</button>
     <ul></ul>
+</div>
+
 
     <script>
         const ul = document.querySelector("ul");
         const input = document.querySelector("input");
         const button = document.querySelector("button");
-        button.addEventListener("click", meineFunk);
+
+
+        button.addEventListener("click", ()=>{
+            if(input.value!==""){
+                meineFunk();
+            } else {
+                alert("Bitte geben Sie einen Namen ein!");
+            }
+
+        });
 
         function meineFunk() {
-            //stop the timer of the old Redner
+            let reset = true;
+
             resetButtons();
 
-            //create new Redner
             const neuerRedner = document.createElement("li");
 
             neuerRedner.innerHTML = `${input.value}
@@ -40,7 +66,7 @@
             let stunden = neuerRedner.querySelectorAll("span")[0];
             let minuten = neuerRedner.querySelectorAll("span")[1];
             let sekunden = neuerRedner.querySelectorAll("span")[2];
-            let reset = true;
+
 
             let timer = setInterval(timerUpdate, 1000);
 
@@ -87,17 +113,19 @@
                 if(run) {
                     clearInterval(timer);
                     stopButton.innerHTML = "Start!";
+                    //stopButton.hidden = false;
                     run = false;
                 } else {
                     timer = setInterval(timerUpdate, 1000);
                     stopButton.innerHTML = "Stopp!";
+                    //stopButton.hidden = true;
                     run = true;
                 }
             }
 
             function resetButtons() {
                 reset = false;
-                let buttons = ul.querySelectorAll("button");
+                let buttons = document.querySelectorAll("button");
                 for(let buttonIndex = 0; buttonIndex < buttons.length; buttonIndex ++) {
                     if(buttons[buttonIndex].innerHTML == "Stopp!") {
                         buttons[buttonIndex].click();

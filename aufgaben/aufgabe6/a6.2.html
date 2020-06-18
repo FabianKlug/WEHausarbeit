@@ -2,43 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
+    <title>Aufgaben</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="../css/a12.css" rel="stylesheet" type="text/css">
     <style>
-
+        *{
+            font-family: 'Roboto', sans-serif;
+            margin: 5px 5px;
+        }
+        div{
+            position: absolute;
+            top: 30%;
+            left: 50%;
+        }
     </style>
 </head>
 <body>
 
-<h2>Async Await -Ding</h2>
+<div>
+    <h2>Abwechselnder Fetch zweier Dateien (async + await) </h2>
 
-<button type="button" onclick="loadDoc()">Nalos! </button>
+    <button type="button" onclick="loadDoc()">Fetch</button>
 
-<p id="demo"></p>
+    <p id="demo">  </p>
+</div>
 
 <script>
     async function loadDoc() {
-        await Promise.all([
-            fetch('./A.txt')
-                .then(x => x.text()),
-            fetch('./B.txt')
-                .then(x => x.text())
-        ]).then(([ersteResp, zweiteResp]) => {
+        let absatz = document.getElementById("demo");
+
+        let resp1 = (await fetch('./A.txt')).text();
+        console.log(resp1)
+
+        let resp2 = (await fetch('./B.txt')).text();
+
+        console.log(JSON.stringify(resp1) + " " + resp2);
+
+
+        /*]).then(([ersteResp, zweiteResp]) => {
             let max;
             if(ersteResp.length >= zweiteResp.length) {
                 max = ersteResp.length;
             } else {
                 max = zweiteResp.length;
             }
-            for(let i = 0; i < ersteResp.split("\n").length; i++) {
-                if (ersteResp.split("\n")[i]) {
+            for(let i = 0; i < max; i++) {
+                if(ersteResp.split("\n")[i]) {
                     console.log(ersteResp.split("\n")[i]);
+                    absatz.innerText += ersteResp.split("\n")[i];
                 }
-                if (zweiteResp.split("\n")[i]) {
+
+                if(zweiteResp.split("\n")[i]) {
                     console.log(zweiteResp.split("\n")[i]);
+                    absatz.innerText += zweiteResp.split("\n")[i];
                 }
             }
-        });
+        });*/
     }
 </script>
 

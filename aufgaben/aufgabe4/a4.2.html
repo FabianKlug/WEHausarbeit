@@ -5,6 +5,85 @@
     <title>Title</title>
 </head>
 <body>
+
+<p>
+
+    function queue() {
+    var queue = {};
+    queue.elements = new Array();
+    queue.size = 0;
+    queue.insert = function(arg) {
+    this.size++;
+    this.elements.push(arg);
+    }
+    queue.length = function() {
+    return this.size;
+    }
+    queue.remove = function() {
+    return this.elements.splice(size-1, 1);
+    }
+    queue.first = function() {
+    return this.elements[0];
+    }
+    return queue;
+    }
+
+</p>
+<p>
+
+    function unOrdSet() {
+    var unOrdSet = {};
+    unOrdSet.elements = new Array();
+    unOrdSet.size = 0;
+    unOrdSet.insert = function(arg) {
+    if(this.elements.indexOf(arg) == -1) {
+    this.size++;
+    this.elements.push(arg);
+    } else {
+    console.log("Schon vorhanden");
+    }
+    }
+    unOrdSet.remove = function(arg) {
+    var index = this.elements.indexOf(arg);
+    if(index != -1) {
+    this.size--;
+    return this.elements.splice(index, 1);
+    } else {
+    console.log("Nicht vorhanden");
+    }
+    }
+    unOrdSet.length = function() {
+    return this.size;
+    }
+    return unOrdSet;
+    }
+
+</p>
+<p>
+
+
+    function UnOrdMultSet() {
+    var multset = {};
+    multset.elements = new Array();
+    multset.size = 0;
+    multset.insert = function(arg) {
+    this.elements.push(arg);
+    }
+    multset.remove = function(arg) {
+    var index = this.elements.indexOf(arg);
+    if(index != -1) {
+    this.size--;
+    return this.elements.splice(index, 1);
+    } else {
+    console.log("Nicht vorhanden");
+    }
+    }
+    multset.length = function() {
+    return this.size;
+    }
+    return multset;
+    }
+</p>
 <script>
     function queue() {
         var queue = {};

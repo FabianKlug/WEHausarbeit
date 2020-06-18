@@ -1,23 +1,36 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>Aufgaben</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="../css/a12.css" rel="stylesheet" type="text/css">
+    <style>
+        *{
+            font-family: 'Roboto', sans-serif;
+            margin: 5px 5px;
+        }
+        div{
+            position: absolute;
+            top: 30%;
+            left: 50%;
+        }
+    </style>
+</head>
 <body>
 
-<h2>Abwechselnder Fetch zweier Dateien </h2>
+<div>
+    <h2>Abwechselnder Fetch zweier Dateien </h2>
 
-<button type="button" onclick="loadDoc()">Fetch</button>
+    <button type="button" onclick="loadDoc()">Fetch</button>
 
-<p id="demo"> </p>
-
-<ul id="liste">
-    <li></li>
-</ul>
-
-<span id="span">A</span>
+    <p id="demo">  </p>
+</div>
 
 <script>
     function loadDoc() {
         const liste = document.getElementById("liste");
-        let absatz = document.getElementById("demo").innerHTML;
+        let absatz = document.getElementById("demo");
 
         Promise.all([
             fetch('./A.txt')
@@ -31,12 +44,15 @@
             } else {
                 max = zweiteResp.length;
             }
-            for(let i = 0; i < ersteResp.split("\n").length; i++) {
+            for(let i = 0; i < max; i++) {
                 if(ersteResp.split("\n")[i]) {
                     console.log(ersteResp.split("\n")[i]);
+                    absatz.innerText += ersteResp.split("\n")[i];
                 }
+
                 if(zweiteResp.split("\n")[i]) {
                     console.log(zweiteResp.split("\n")[i]);
+                    absatz.innerText += zweiteResp.split("\n")[i];
                 }
             }
         });

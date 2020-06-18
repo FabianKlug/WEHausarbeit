@@ -5,6 +5,129 @@
     <title>Title</title>
 </head>
 <body>
+    <p>
+        function identity_function(arg) {
+            return function() {
+                return arg;
+            }
+        }
+    </p>
+
+    <p>
+        function identity_function(arg) {
+        return function() {
+        return arg;
+        }
+        }
+    </p>
+
+    <p>
+        function applyf(func) {
+        return function(arg1) {
+        return function(arg2) {
+        return func(arg1,arg2);
+        }
+        }
+        }
+    </p>
+
+    <p>
+        function curry(func, arg1) {
+        return function(arg2) {
+        return func(arg1, arg2);
+        }
+        }
+    </p>
+
+    <p>
+
+
+        function inc(x) {
+        return addf(x)(1);
+        }
+    </p>
+
+    <p>
+
+        function methodize(func) {
+        return function(y) {
+        return func(this,y);
+        }
+        }
+    </p>
+
+    <p>
+
+        function demethodize(method) {
+        return function(arg1, arg2) {
+        return method.call(arg1, arg2);
+        }
+        }
+    </p>
+
+    <p>
+
+        function twice(func) {
+        return function(arg) {
+        return func(arg,arg);
+        }
+        }
+    </p>
+
+    <p>
+
+        function composeu(func1, func2) {
+        return function(arg) {
+        return func2(func1(arg));
+        }
+        }
+    </p>
+
+    <p>
+
+        function once(func) {
+        var test = true;
+        if(test) {
+        test = false;
+        return function(arg1, arg2) {
+        func(arg1, arg2);
+        }
+        }
+        console.log("Fehler");
+        }
+    </p>
+
+    <p>
+
+        function counterf(arg) {
+        var counter = {};
+        counter.value = arg;
+        animal.inc = function() {
+        this.value++;
+        console.log(this.value);
+        }
+        animal.dec = function() {
+        this.value--;
+        console.log(this.value);
+        }
+        return counter;
+        }
+    </p>
+
+    <p>
+
+        function revocable(func) {
+        var test = true;
+        function invoke(arg1) {
+        if(test) {
+        return func(arg1);
+        }
+        }
+        function revoke() {
+        test = false;
+        }
+        }
+    </p>
 
 <script>
     function identity_function(arg) {
@@ -26,7 +149,6 @@
             }
         }
     }
-
 
     function curry(func, arg1) {
         return function(arg2) {

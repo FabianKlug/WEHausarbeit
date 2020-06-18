@@ -2,9 +2,150 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Performance-Messung</title>
+    <link href="../css/a12.css" rel="stylesheet" type="text/css">
+    <style>
+        p{
+            color: white;
+        }
+        .container{
+            position: absolute;
+            top: 10%;
+            left: 10%;
+        }
+        th {
+            padding: 10px 10px;
+            margin: 10px 10px;
+        }
+        table{
+            width: 90%;
+        }
+        .white{
+            color: white;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
+    <h1>
+        Zeitmessung der verschiedenen Methoden mithilfe von performance.now()
+    </h1>
+    <br>
+    <table>
+        <tr>
+            <th>
+               innerHTML
+            </th>
+            <th>
+                innerText
+            </th>
+            <th>
+                textContent
+            </th>
+            <th>
+                outerHTML
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <p id="innerHTML"></p>
+            </td>
+            <td>
+                <p id="innerText"></p>
+            </td>
+            <td>
+                <p id="textContent"></p>
+            </td>
+            <td class="white">
+                <p>
+                    <p id="outerHTML"></p>
+                </p>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button id="button_innerHTML">Start!</button>
+            </td>
+            <td>
+                <button id="button_innerText">Start!</button>
+            </td>
+            <td>
+                <button id="button_textContent">Start!</button>
+            </td>
+            <td>
+                <button id="button_outerHTML">Start!</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    const innerHTML = document.getElementById("innerHTML");
+    const innerText = document.getElementById("innerText");
+    const textContent = document.getElementById("textContent");
+    const outerHTML = document.getElementById("outerHTML");
+
+    const button_innerHTML = document.getElementById("button_innerHTML");
+    const button_innerText = document.getElementById("button_innerText");
+    const button_textContent = document.getElementById("button_textContent");
+    const button_outerHTML = document.getElementById("button_outerHTML");
+
+    const lorem = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
+    button_innerHTML.addEventListener("click", ()=>{
+        innerHTML.innerHTML="";
+        const start = performance.now();
+
+        innerHTML.innerHTML=lorem;
+        const ende = performance.now();
+
+        console.log(ende + "-" + start)
+        console.log((ende-start) / 1000);
+
+        innerHTML.innerHTML+=" \n Ergebnis:"+(ende-start) / 1000+"s";
+        button_innerHTML.innerHTML="Neustart!";
+    })
+    button_innerText.addEventListener("click", ()=>{
+        innerText.innerText="";
+        const start = performance.now();
+        innerText.innerText=lorem;
+        const ende = performance.now();
+
+        console.log(ende + "-" + start)
+        console.log((ende-start) / 1000);
+
+        innerText.innerText+=" \n Ergebnis:"+(ende-start) / 1000+"s";
+        button_innerText.innerText="Neustart!";
+    })
+    button_textContent.addEventListener("click", ()=>{
+        textContent.textContent="";
+        const start = performance.now();
+        textContent.textContent=lorem;
+        const ende = performance.now();
+
+        console.log(ende + "-" + start)
+        console.log((ende-start) / 1000);
+
+        textContent.textContent+=" \n Ergebnis:"+(ende-start) / 1000+"s";
+        button_textContent.textContent="Neustart!";
+    })
+    button_outerHTML.addEventListener("click", ()=>{
+
+        outerHTML.innerText="";
+        const start = performance.now();
+
+        outerHTML.outerHTML = lorem;
+
+        const ende = performance.now();
+
+        outerHTML.innerHTML = " \n Ergebnis:"+((ende-start) / 1000)+"s";
+
+        console.log(ende + "-" + start)
+        console.log((ende-start) / 1000);
+        button_outerHTML.hidden=true;
+    })
+</script>
 
 </body>
 </html>

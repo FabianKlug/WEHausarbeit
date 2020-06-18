@@ -4,31 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Einkaufsliste </title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="../css/a12.css" rel="stylesheet" type="text/css">
+    <style>
+        *{
+            font-family: 'Roboto', sans-serif;
+        }
+        div{
+            padding: 10px 10px;
+            position: absolute;
+            left: 35%;
+            top: 30%;
+        }
+    </style>
+
 </head>
 <body>
+<div>
     <h1> Einkaufsliste </h1>
-    <label> Enter a new item:
+    <label> Geben Sie ein neues Produkt ein:
         <input type="text">
     </label>
-    <button> Add item</button>
+    <button> Hinzufügen! </button>
     <ul>    </ul>
 
     <script>
         const list = document.querySelector('ul');
         const add_button = document.querySelector('button');
-        const input = document.querySelector('input');
+        let input = document.querySelector('input');
 
         add_button.onclick = function append() {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `${input.value} <button>delete</button>`;
-            list.appendChild(listItem);
-            const delete_button = listItem.querySelector('button');
-            delete_button.onclick = () => list.removeChild(listItem);
+            if(input.value!==""){
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `${input.value} <button>Löschen</button>`;
+                list.appendChild(listItem);
+                const delete_button = listItem.querySelector('button');
+                delete_button.onclick = () => list.removeChild(listItem);
+                input.value = "";
+                input.focus();
+            } else {
+                alert("Kein Produkt eingegeben");
+            }
 
         }
-    input.value(``);
-    input.focus();
+
+
     </script>
+
+</div>
 
 </body>
 </html>

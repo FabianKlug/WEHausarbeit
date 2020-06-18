@@ -2,35 +2,39 @@
 <html lang="en">
 <head>
     <title>a2.4</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <style>
+        *{
+            font-family: 'Roboto', sans-serif;
+        }
         #ring{
             background-color: #b2d6d1;
         }
-        #form{
-            background-color: white;
-            margin: auto;
-            width:90%;
-        }
-        label{
-            display: block ;
-            float: bottom;
-            align-content: center;
-        }
-        input,
-        select{
-            margin: auto;
-            font-family: inherit;
-            font-size: inherit;
-            align-content: center;
-        }
-        h1, h2{
-            align-content: center;
-            text-align: center;
-        }
-        form{
 
-            vertical-align: middle;
+        td  {
+            padding-top: 5px;
+            padding-left: 5px;
+            text-align: right;
+            max-width: 400px;
+        }
+        .label{
+
+        }
+        .input{
+            text-align: left;
+            text-align-all: left;
+        }
+        h1{
             text-align: center;
+        }
+        select{
+            text-align:left;
+        }
+        .unten{
+            position: absolute;
+            left: 20%;
+            width: 40%;
+            background-color: rgba(250,250,250,0.15);
         }
 
     </style>
@@ -42,64 +46,50 @@
     <h1> Survey Form </h1>
 
 
-    <div id="form">
-        <form >
+    <div class="unten">
+        <table>
+            <tr>
+                <td class="label">* Name:</td>
+                <td class="input"><input type="text" placeholder="Enter your name"></td>
+            </tr>
+            <tr>
+                <td>* Email:</td>
+                <td class="input"><input type="email" placeholder="Enter your email"></td>
+            </tr>
+            <tr>
+                <td>* Age:</td>
+                <td class="input"><input type="number" placeholder="Age"></td>
+            </tr>
+            <tr>
+                <td>Which option best describes your current role?</td>
+                <td class="input"><select>
+                    <option value="student">Student</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>How likely is that you would recommend freeCodeCamp to a friend?</td>
+                <td class="input"><input type="checkbox"> Definetly <br>
+                    <input type="checkbox"> Maybe<br>
+                    <input type="checkbox"> Not sure <br>
+                </td>
+            </tr>
+            <tr>
+                <td>What do you like most in FCC:</td>
+                <td class="input"><select name="dropdown2" >
+                    <option> Select an option</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><label>Things that should be improved in the future<br> (Check all that apply):<label></td>
+                <td class="input"><input type="checkbox"> Front-end Projects <br>
+                    <input type="checkbox"> Back-end Projects <br>
+                    <input type="checkbox"> Data Visualization <br>
+                </td>
+            </tr>
 
-            <h2>Let us know how we can improve freeCodeCamp</h2>
-            <ul style="list-style: none">
-                <li>
-                    <label>* Name:
-                        <input type="text" placeholder="Enter your name"> <br>
-                    </label>
-                </li>
-                <br>
-                <li>
-                    <label>* Email:
-                        <input type="email" placeholder="Enter your email"> <br>
-                    </label>
-                </li>
-                <br>
-                <li>
-                    <label>* Age:
-                        <input type="number" placeholder="Age"> <br>
-                    </label>
-                </li>
-                <br>
-                <li>
-                    <label>Which option best describes your current role?
-                        <select>
-                            <option value="student">Student</option>
-                        </select> <br>
-                    </label>
-                </li>
-                <br>
-                <li>
-                    <label>How likely is that you would recommend freeCodeCamp to a friend?
-                        <input type="checkbox"> Definetly <br>
-                        <input type="checkbox"> Maybe<br>
-                        <input type="checkbox"> Not sure <br>
-                    </label>
-                </li>
-                <br>
-                <li>
-                    <label>What do you like most in FCC:
-                        <select name="dropdown2" >
-                            <option> Select an option</option>
-                        </select> <br>
-                    </label>
-                </li>
-                <br>
-                <li>
-                    <label>hings that should be improved in the future (Check all that apply):
-                        <input type="checkbox"> Front-end Projects <br>
-                        <input type="checkbox"> Back-end Projects <br>
-                        <input type="checkbox"> Data Visualization <br>
-                    </label>
-                </li>
-            </ul>
-
-        </form>
+        </table>
     </div>
+
 </div>
 </body>
 </html>
