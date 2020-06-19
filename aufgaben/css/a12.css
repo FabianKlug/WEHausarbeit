@@ -12,6 +12,7 @@ h1{
 
 body {
     background: url(../bild.jpg) no-repeat center center fixed;
+    /*bildquelle: https://pxhere.com/en/photo/1430373*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

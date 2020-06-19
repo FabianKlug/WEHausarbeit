@@ -2,12 +2,12 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Anmeldung</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="../css/a12.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form action="" method="post" >
+<form action=" " method="post" >
 
     <h1>Anmeldung</h1>
 
@@ -37,22 +37,23 @@
         $nutzername = $_POST['nutzername'];
         $passwort = $_POST['passwort'];
 
-        if(!empty($nutzername) && !empty($passwort)) {
-            $file = 'user.txt';
-            // Öffnet die Datei, um den vorhandenen Inhalt zu laden
-            $current = file_get_contents($file);
-            // Fügt eine neue Person zur Datei hinzu
-            $current .= "$nutzername $passwort\n";
-            // Schreibt den Inhalt in die Datei zurück
+        $lines = file( './etc/daten.csv' );
+        foreach ($lines as $line_num => $line) {
+            list($datei_nutzername, $datei_passwort) = explode(",", $line);
 
-            file_put_contents($file, $current);
-            echo $nutzername, " erfolgreich registiert.";
+            $datei_passwort = substr($datei_passwort, 0, strlen($datei_passwort)-1);
 
-        } else {
-            echo 'Nicht alle Felder sind ausgefüllt worden';
-            die();
+            if ($datei_nutzername == $nutzername && $datei_passwort == hash("sha384", $passwort . '#khaszi398fhlkvkhjewoiu+')) {
+                echo 'Login war erfolgreich! Willkommen zurück ' , $nutzername;
+                break;
+            } else {
+                echo 'Login war nicht erfolgreich!';
+                break;
+            }
+
         }
     }
+
     ?>
 </form>
 <script>

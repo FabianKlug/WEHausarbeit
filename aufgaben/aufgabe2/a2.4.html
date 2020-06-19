@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>a2.4</title>
+    <title>Survey Form</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <style>
         *{
             font-family: 'Roboto', sans-serif;
+
         }
         #ring{
+            padding: 0 0 0 0 ;
+            margin: -25px -14px -5px -10px ;
             background-color: #b2d6d1;
         }
 
@@ -32,9 +35,10 @@
         }
         .unten{
             position: absolute;
-            left: 20%;
+            left: 28%;
+            right: 20%;
             width: 40%;
-            background-color: rgba(250,250,250,0.15);
+            background-color: white;
         }
 
     </style>
@@ -68,9 +72,9 @@
             </tr>
             <tr>
                 <td>How likely is that you would recommend freeCodeCamp to a friend?</td>
-                <td class="input"><input type="checkbox"> Definetly <br>
-                    <input type="checkbox"> Maybe<br>
-                    <input type="checkbox"> Not sure <br>
+                <td class="input"><input type="radio" name="rec"> Definetly <br>
+                    <input type="radio" name="rec"> Maybe<br>
+                    <input type="radio" name="rec"> Not sure <br>
                 </td>
             </tr>
             <tr>

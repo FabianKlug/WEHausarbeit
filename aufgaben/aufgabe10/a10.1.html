@@ -3,19 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Aufgabe 1.1 </title>
+    <title> Unabhängige Vue.js-Counter </title>
+    <link href="../css/allgemein.css" type="text/css" rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Roboto', sans-serif;
+        }
+        h1{
+            padding: 10px 10px;
+        }
+        .container{
+            position: absolute;
+            top: 20%;
+            left: 30%;
+        }
+        button {
+            width:40px;
+            height: 40px;
+            font-weight: bold;
+        }
+        output{
+
+        }
+    </style>
 </head>
 <body>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
-<div id="myApp">
-    <button @click="increment"> + </button>
-    <button @click="decrement"> - </button>
-    <output name="ergebnis"> Counter: {{result}} </output>
-    <br>
-    <br>
-    <output name="clickanzahl"> Klickanzahl insgesamt: {{clicks}}</output>
+<div class="container">
+    <h1>Unabhängige Vue.js-Counter</h1>
+    <div id="myApp">
+        <button @click="increment"> + </button>
+        <button @click="decrement"> - </button>
+        <output name="ergebnis"> Counter: {{result}} </output>
+        <br>
+        <br>
+        <output name="clickanzahl"> Klickanzahl insgesamt: {{clicks}}</output>
+    </div>
 </div>
+
+
 
 <script>
     new Vue({

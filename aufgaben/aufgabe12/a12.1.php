@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Registrierung</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="../css/a12.css" rel="stylesheet" type="text/css">
 </head>
@@ -40,24 +40,16 @@
         $nutzername = $_POST['nutzername'];
         $passwort = $_POST['passwort'];
 
+
+
         if(!empty($nutzername) && !empty($passwort)) {
-            /*
-            // Öffnet die Datei, um den vorhandenen Inhalt zu laden
+            $SALT = '#khaszi398fhlkvkhjewoiu+';
+            $file = "./etc/daten.csv";
+            $zeile = $nutzername.','.hash("sha384",$passwort . $SALT)."\n";
 
-            // Fügt eine neue Person zur Datei hinzu
-            $current .= "$nutzername $passwort\n";
-            // Schreibt den Inhalt in die Datei zurück*/
-
-            $file = 'user.txt';
-            $current = file_get_contents($file);
-            array_push($current, array ('Nutzername' => $nutzername,
-                'Passwort' => $passwort));
-
-
-            file_put_contents($file, print_r($current, true));
-
-            //file_put_contents($file, $current);
-            echo  $nutzername, " erfolgreich registiert.";
+            if ( file_put_contents( $file, $zeile, FILE_APPEND | LOCK_EX ) ){
+                echo "$nutzername,'erfolgreich registiert. '<script>alert('Registered successfully!')</script>";
+            }
 
         } else {
             echo 'Nicht alle Felder sind ausgefüllt worden';

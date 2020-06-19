@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Title </title>
+    <title> Lit-Element Menu </title>
+    <link href="../css/allgemein.css" rel="stylesheet" type="text/css">
     <style>
+        .container{
+            position: absolute;
+            left: 20%;
+        }
+        .mybutton:hover{
+            background-color: white;
+            color: #3E5E69;
+        }
         .mybutton {
             border-radius: 12px;
             color: black;
@@ -12,11 +21,12 @@
             border-color: white;
             margin-right: 40px;
             padding: 20px;
-
         }
+
 
         .grid-container {
             display: grid;
+
         }
 
         .grid-item {
@@ -80,10 +90,13 @@
     </style>
 </head>
 <body>
-<h1> Lit-Menu </h1>
-<lit-menu vert="true">
+<div class="container">
+    <h1> Lit-Element Menu </h1>
+    <lit-menu vert="true">
 
-</lit-menu>
+    </lit-menu>
+</div>
+
 
 <script type="module">
     import { LitElement, html, css} from 'https://unpkg.com/lit-element?module';
@@ -96,6 +109,12 @@
 
         render() {
             return html`
+                    <style>
+                            .mybutton:hover{
+                                background-color: white;
+                                color: #3E5E69;
+                            }
+                    </style>
                     <div class="grid-container">
                         <div class ="grid-item header">
                             <h2> WWW - Navigator </h2>
