@@ -30,34 +30,31 @@
 <script>
     async function loadDoc() {
         let absatz = document.getElementById("demo");
+        absatz.innerText="";
 
-        let resp1 = (await fetch('./A.txt')).text();
-        console.log(resp1)
+        let fetch1 = await fetch("./A.txt");
+        let fetch2 = await fetch("./B.txt");
 
-        let resp2 = (await fetch('./B.txt')).text();
+        let text1 = await fetch1.text();
+        let text2 = await fetch2.text();
 
-        console.log(JSON.stringify(resp1) + " " + resp2);
+        let array1 = text1.split("\n");
+        let array2 = text2.split("\n");
 
+        let max = 0;
+        if(array1.length < array2.length)
+            max = array2.length;
+         else
+            max = array1.length;
 
-        /*]).then(([ersteResp, zweiteResp]) => {
-            let max;
-            if(ersteResp.length >= zweiteResp.length) {
-                max = ersteResp.length;
-            } else {
-                max = zweiteResp.length;
+        for( let index = 0; index < max;index++) {
+            if(array1[index]){
+                absatz.innerText+=array1[index];
             }
-            for(let i = 0; i < max; i++) {
-                if(ersteResp.split("\n")[i]) {
-                    console.log(ersteResp.split("\n")[i]);
-                    absatz.innerText += ersteResp.split("\n")[i];
-                }
-
-                if(zweiteResp.split("\n")[i]) {
-                    console.log(zweiteResp.split("\n")[i]);
-                    absatz.innerText += zweiteResp.split("\n")[i];
-                }
+            if(array2[index]){
+                absatz.innerText+=array2[index];
             }
-        });*/
+        }
     }
 </script>
 

@@ -2,9 +2,254 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>WWW-Navigator</title>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../wwwnav.jpg);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 100%;
+        }
+
+        header {
+            display: flex;
+            padding: 5px 5px 5px 5px;
+        }
+
+        #mehrspaltig {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+
+        }
+
+        nav {
+            flex: 1;
+
+        }
+
+        article {
+            flex: 4;
+
+        }
+
+        aside {
+            flex: 1;
+
+        }
+
+        footer {
+
+        }
+        header ul li {
+            float: left;
+            padding-right: 20px;
+            list-style-type: none;
+
+
+        }
+        header a {
+            text-align: center;
+            font-size: 3vh;
+            text-decoration: none;
+            color: white;
+            padding: 5px 5px;
+
+        }
+        header li a:hover {
+
+            background-color: white;
+            color: #5D5E5F;
+            transform: scale(1.5);
+            opacity: 1;
+        }
+
+        footer ul li  {
+            display: flex;
+            flex-direction: row;
+            float: left;
+            padding-right: 20px;
+            list-style-type: none;
+        }
+
+        footer a{
+            text-decoration: none;
+            color: white;
+            padding: 10px 10px 10px 10px;
+        }
+        footer a:hover{
+            background-color: white;
+            color: #5D5E5F;
+            opacity: 1;
+        }
+
+        aside ul li{
+            list-style-type: none;
+            padding-bottom: 10px;
+
+        }
+
+        aside a {
+            font-size: 2vh;
+            text-decoration: none;
+            color: white;
+            padding: 5px 5px;
+        }
+        aside li a:hover {
+
+            background-color: white;
+            color: #5D5E5F;
+            transform: scale(1.5);
+            opacity: 1;
+        }
+
+
+    </style>
 </head>
 <body>
+
+
+
+<div id="wrapper">
+    <header>
+        <h1>WWW Navigator</h1>
+        <ul>
+            <li><a href="#" target="" id="link_html">HTML</a></li>
+            <li><a href="#" target="" id="link_css">CSS</a></li>
+            <li><a href="#" target="" id="link_js">JavaScript</a></li>
+            <li><a href="#" target="" id="link_other">Other</a></li>
+        </ul>
+    </header>
+    <div id="mehrspaltig">
+        <aside>
+            <ul id="liste">
+
+            </ul>
+        </aside>
+        <article>
+            <p id="text">
+
+            </p>
+            </article>
+        <aside>Referenzen:</aside>
+    </div>
+    <footer>
+
+        <ul>
+            <li><a href="">Sitemap</a></li>
+            <li><a href="">Home</a></li>
+            <li><a href="">News</a></li>
+            <li><a href="">Contact</a></li>
+            <li><a href="">About</a></li>
+        </ul>
+    </footer>
+</div>
+
+<script>
+    const link_html = document.getElementById("link_html");
+
+    const link = document.getElementsByTagName("a");
+
+    const link_css = link[1];
+    const link_js = link[2];
+    const link_other = link[3];
+
+    link_html.addEventListener("click", show_html);
+    link_css.addEventListener("click", show_css);
+    link_js.addEventListener("click", show_js);
+    link_other.addEventListener("click", show_other);
+
+    async function show_html() {
+        document.getElementById("liste").innerHTML="";
+        let response1 = await fetch("./content.json");
+        response1 = await response1.json();
+
+        //Navigationsleiste links
+        for( let index = 0; index < Object.keys(response1.html.headings.html).length; index++) {
+            let text = "";
+            text = Object.values(response1.html.headings.html);
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML= `<a href='#' id=${text[index]}> ${text[index]} </a>`;
+            document.getElementById("liste").appendChild(listItem);
+        }
+        document.getElementById("text").innerText = response1.html.paragraphs.html;
+
+        //Unterüberschriften
+        const link2 = document.getElementsByTagName("a");
+
+
+        for(let i = 0; i < link2.length; i++) {
+            console.log(link2[i])
+        }
+    }
+    async function show_css() {
+        let response1 = await fetch("./content.json");
+        response1 = await response1.json();
+        document.getElementById("liste").innerHTML="";
+
+
+
+        //Navigationsleiste links
+        for( let index = 0; index < Object.keys(response1.html.headings.css).length; index++) {
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML= `<a href='#'> ${Object.values(response1.html.headings.css)[index]} </a>`;
+            document.getElementById("liste").appendChild(listItem);
+        }
+
+        document.getElementById("text").innerText = response1.html.paragraphs.css;
+    }
+    async function show_js() {
+        let response1 = await fetch("./content.json");
+        response1 = await response1.json();
+        document.getElementById("liste").innerHTML="";
+
+        //Navigationsleiste links
+        for( let index = 0; index < Object.keys(response1.html.headings.javascript).length; index++) {
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML= `<a href='#'> ${Object.values(response1.html.headings.javascript)[index]} </a>`;
+            document.getElementById("liste").appendChild(listItem);
+        }
+
+        document.getElementById("text").innerText = response1.html.paragraphs.javascript;
+
+    }
+    async function show_other() {
+        let response1 = await fetch("./content.json");
+        response1 = await response1.json();
+        document.getElementById("liste").innerHTML="";
+
+        //Navigationsleiste links
+        for( let index = 0; index < Object.keys(response1.html.headings.other).length; index++) {
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML= `<a href='#'> ${Object.values(response1.html.headings.other)[index]} </a>`;
+            document.getElementById("liste").appendChild(listItem);
+        }
+
+        document.getElementById("text").innerText = response1.html.paragraphs.other;
+
+    }
+
+    window.onload = () => {
+        show_html()
+    };
+
+</script>
 
 </body>
 </html>
