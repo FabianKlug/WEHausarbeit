@@ -2,9 +2,134 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Animation Bezierkurve</title>
 </head>
 <body>
+<lit-drag>
 
+</lit-drag>
 </body>
 </html>
+<script type="module">
+
+    import { LitElement, html, css, svg } from 'https://unpkg.com/lit-element?module';
+
+    class LitDrag extends LitElement {
+
+        static get properties() {
+            return {
+                x_Punkt1: Number,
+                y_Punkt1: Number,
+
+                x_Punkt2: Number,
+                y_Punkt2: Number,
+
+                x_Punkt3: Number,
+                y_Punkt3: Number,
+            }
+        }
+
+        constructor() {
+
+            super();
+            this.x_Punkt1 = 50;
+            this.y_Punkt1 = 400;
+
+            this.x_Punkt2 = 350;
+            this.y_Punkt2 = 50;
+
+            this.x_Punkt3 = 250;
+            this.y_Punkt3 = 300;
+
+
+        }
+
+        render() {
+            return html`
+                <button @click="${this.clickHandler()}"></button>
+                <svg width="600" height="600">
+                    <g stroke="black" stroke-width="3" fill="black">
+                        <circle id="kreis1" class="draggable" cx="${this.x_Punkt1}" cy="${this.y_Punkt1}" r="6"></circle>
+                        <circle id="kreis2" class="draggable" cx="${this.x_Punkt2}" cy="${this.y_Punkt2}" r="6"></circle>
+                        <circle id="kreis3" class="draggable" cx="${this.x_Punkt3}" cy="${this.y_Punkt3}" r="6"></circle>
+                    </g>
+                    <path d="M ${this.x_Punkt1} ${this.y_Punkt1} L ${this.x_Punkt2} ${this.y_Punkt2}" stroke-width="1"
+                        stroke="lightgrey"></path>
+                    <path d="M ${this.x_Punkt2} ${this.y_Punkt2} L ${this.x_Punkt3} ${this.y_Punkt3}" stroke-width="1"
+                        stroke="lightgrey"></path>
+                    <path d="M ${this.x_Punkt1} ${this.y_Punkt1} Q ${this.x_Punkt2} ${this.y_Punkt2} ${this.x_Punkt3} ${this.y_Punkt3}"
+                        stroke-width="2" stroke="black" fill="none"></path>
+                </svg>`;
+        }
+
+        clickHandler() {
+            console.log("Hallo")
+            var shadow = this.shadowRoot;
+            //const draggables = shadow.querySelectorAll('.draggable');
+            let draggables = [];
+            draggables.push(shadow.getElementById("kreis1"));
+            draggables.push(shadow.getElementById("kreis2"));
+            draggables.push(shadow.getElementById("kreis3"));
+
+            shadow.getElementById("kreis1").addEventListener('mousedown' , startDrag);
+
+            console.log(draggables);
+
+            for(var i = 0; i < 3; i++) {
+                makeDraggable(draggables[i], i);
+            }
+
+            function makeDraggable(elem, j) {
+                elem.addEventListener('mousedown', startDrag);
+                elem.addEventListener('mousemove', drag);
+                elem.addEventListener('mouseup', endDrag);
+                elem.addEventListener('mouseleave', endDrag);
+                let selectedElement, offset;
+            }
+
+            function startDrag(evt) {
+                if (evt.target.classList.contains('draggable')) {
+                    selectedElement = evt.target;
+                    offset = getMousePosition(evt);
+                    offset.x -= parseFloat(selectedElement.getAttribute("cx"));
+                    offset.y -= parseFloat(selectedElement.getAttribute("cy"));
+                }
+            }
+            function drag(evt) {
+                if (selectedElement) {
+                    evt.preventDefault();
+                    var coord = getMousePosition(evt);
+                    console.log(coord)
+                    if(j === 0) {
+                        selectedElement.setAttribute("cx", coord.x - offset.x);
+                        selectedElement.setAttribute("cy", coord.y - offset.y);
+                        this.x_Punkt1 = coord.x - offset.x;
+                        this.y_Punkt1 = coord.y - offset.y;
+                    } else if(j === 1) {
+                        selectedElement.setAttribute("cx", coord.x - offset.x);
+                        selectedElement.setAttribute("cy", coord.y - offset.y);
+                        this.x_Punkt2 = coord.x - offset.x;
+                        this.y_Punkt2 = coord.y - offset.y;
+                    } else if(j === 2) {
+                        selectedElement.setAttribute("cx", coord.x - offset.x);
+                        selectedElement.setAttribute("cy", coord.y - offset.y);
+                        this.x_Punkt3 = coord.x - offset.x;
+                        this.y_Punkt3 = coord.y - offset.y;
+                    }
+                }
+            }
+            function endDrag(evt) {
+                selectedElement = null;
+            }
+            function getMousePosition(evt) {
+                var CTM = shadow.querySelector('svg').getScreenCTM();
+                return {
+                    x: (evt.clientX - CTM.e) / CTM.a,
+                    y: (evt.clientY - CTM.f) / CTM.d
+                };
+            }
+        }
+    }
+
+    customElements.define('lit-drag', LitDrag);
+</script>

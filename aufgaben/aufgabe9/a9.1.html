@@ -1,10 +1,276 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <title>WWW-Navigator</title>
+    <style>
+        :root {
+            --button-height: 34px;
+        }
+        body {
+            display: grid;
+            grid-template-columns: 15vw 60vw 25vw;
+            grid-template-rows: minmax(40px, 6vh) minmax(var(--button-height), 7vh) minmax(87vh, max-content);
+            grid-template-areas:
+                    "header header header"
+                    "oberthema oberthema oberthema"
+                    "untermenue dokumentation extern";
+            margin: 0;
+        }
+
+        #header, #oberthema {
+            background-color: #c24f4f;
+        }
+        #header {
+            grid-area: header;
+        }
+        #oberthema {
+            grid-area: oberthema;
+        }
+        #untermenue, #extern {
+            background-color: #c28283;
+        }
+        #untermenue {
+            grid-area: untermenue;
+        }
+        #extern {
+            grid-area: extern;
+        }
+        #dokumentation {
+            grid-area: dokumentation;
+            background-color: #95d2f3;
+        }
+
+
+        div#oberthema, div#untermenue {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        div#oberthema button, div#untermenue button {
+            margin: 4px;
+        }
+        div#oberthema {
+            flex-flow: row;
+            align-items: center;
+        }
+        div#untermenue {
+            flex-flow: column;
+            align-items: flex-start;
+            padding-top: 5px;
+        }
+
+        #header h1 {
+            color: white;
+            text-align: center;
+            margin-top: 0;
+        }
+        #extern p {
+            color: white;
+        }
+        div {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        button {
+            padding: 5px 25px;
+            height: var(--button-height);
+            border-radius: 10px;
+            font-weight: bold;
+            background-color: #6a70a0;
+        }
+        button:disabled {
+            background-color: #e1dcda;
+        }
+    </style>
 </head>
 <body>
+<div id="header"><h1>WWW-Navigator</h1></div>
+<div id="oberthema"><button type=button id="undo" disabled>Zurück</button></div>
+<div id="untermenue"></div>
+<div id="dokumentation"><h2>Willkommen</h2><p>Bitte wählen sie ein Oberthema und dann einen Begriff auf der linken Seite, um sich eine Dokumentation anzeigen zu lassen.</p></div>
+<div id="extern"><p>Hier werden zusätzliche Links zu externen Ressourcen erscheinen</p></div>
 
+<script>
+    const mainMenuButtons = document.getElementById('oberthema');
+    const subMenuButtons = document.getElementById('untermenue');
+    const displayArea = document.getElementById('dokumentation');
+    const externSourcesArea = document.getElementById('extern');
+    const undoButton = document.getElementById('undo');
+    (async function() {
+        try {
+            var navigationStructure = await (await fetch('./data.json')).json();
+        } catch (error) {
+            console.log(`Fehler beim Laden der Navigation: ${error.name}: ${error.message}`);
+            displayArea.innerHTML = '<h2>Leider konnte die Navigation nicht geladen werden. Bitte versuchen sie es später noch mal.<br>Sollte das Problem weiterhin bestehen, so kontaktieren sie bitte den Webseitenbetreiber.</h2>';
+        }
+
+        var externSourcesInterval;
+        var parseDisplayArea = parseDisplayAreaFunction();
+        var undoManager = (function() {
+            var undoStack = [];
+            return {
+                undo: function() {
+                    if (undoStack.length > 0) {
+                        let oldState = undoStack.pop();
+                        if (undoStack.length === 0) {
+                            backToStart();
+                            undoButton.disabled = true;
+                        } else {
+                            let stateToReach = undoStack[undoStack.length - 1];
+                            loadSpecificMenus(stateToReach[0], stateToReach[1], oldState[0]);
+                        }
+                    }
+                },
+                add: function(mainmenu, submenu) {
+                    undoStack.push([mainmenu, submenu]);
+                    undoButton.disabled = false;
+                },
+                getCurrent: function() {
+                    return undoStack[undoStack.length - 1];
+                }
+            }
+        })();
+        //Set up mainmenu
+        for(let mmKey in navigationStructure) {
+            //create button for mainmenu heading
+            let mainMenuButton = document.createElement('button');
+            mainMenuButton.innerText = mmKey;
+            mainMenuButton.onclick = () => {
+                history.pushState({main: mmKey, sub: ""}, `Title: ${mmKey}`, mmKey);
+                loadMainmenu(mmKey, mainMenuButton);
+                undoManager.add(mmKey);
+            };
+            oberthema.insertBefore(mainMenuButton, oberthema.lastChild);
+        }
+
+        undoButton.onclick = undoManager.undo;
+
+        function loadMainmenu(mmKey, mainMenuButton) {
+            while(subMenuButtons.firstChild)
+                subMenuButtons.removeChild(subMenuButtons.firstChild);
+
+            parseDisplayArea(navigationStructure[mmKey]["_doc"]);
+
+            //parseExternSources(navigationStructure[mmKey]["_doc"]);
+
+            for (let i = 0; i < mainMenuButtons.children.length - 1; ++i)
+                mainMenuButtons.children[i].disabled = false;
+            mainMenuButton.disabled =  true;
+            //Set up submenu
+            for (let smKey in navigationStructure[mmKey]) {
+
+                if(smKey === "_doc")
+                    continue;
+
+                let subMenuButton = document.createElement('button');
+                subMenuButton.innerText = smKey;
+                subMenuButton.onclick = () => {
+                    history.pushState({main: mmKey, sub: smKey}, `Title: ${mmKey} ${smKey}`, `${mmKey}=${smKey}`);
+                    loadSubmenu(mmKey, smKey, subMenuButton);
+                    undoManager.add(mmKey, smKey);
+                };
+                subMenuButtons.appendChild(subMenuButton);
+            }
+        }
+
+        function loadSubmenu(mmKey, smKey, subMenuButton) {
+
+            for (let j = 0; j < subMenuButtons.children.length; ++j)
+                subMenuButtons.children[j].disabled = false;
+            subMenuButton.disabled = true;
+            parseDisplayArea(navigationStructure[mmKey][smKey]);
+            //parseExternSources(navigationStructure[mmKey][smKey]);
+        }
+
+
+        function loadSpecificMenus(mmToAchieve, smToAchieve, currentMm) {
+            if (!currentMm)
+                currentMm = undoManager.getCurrent()[0];
+            if (currentMm !== mmToAchieve || !smToAchieve) {
+                let mainMenuButton;
+                for (let i = 0; i < mainMenuButtons.children.length; ++i){
+                    if (mainMenuButtons.children[i].innerText === mmToAchieve) {
+                        mainMenuButton = mainMenuButtons.children[i];
+                    }
+                }
+                loadMainmenu(mmToAchieve, mainMenuButton);
+            }
+            if (smToAchieve) {
+                let subMenuButton;
+                for (let i = 0; i < subMenuButtons.children.length; ++i ){
+                    if (subMenuButtons.children[i].innerText === smToAchieve) {
+                        subMenuButton = subMenuButtons.children[i];
+                    }
+                }
+                loadSubmenu(mmToAchieve, smToAchieve, subMenuButton);
+            } else {
+                for (let i = 0; i < subMenuButtons.children.length; ++i)
+                    subMenuButtons.children[i].disabled = false;
+            }
+        }
+
+
+        function parseDisplayAreaFunction() {
+            let globalNonce;
+            return async function(...args) {
+                const localNonce = globalNonce = new Object();
+                const parseDisplayArea = function*(content) {
+                    while (displayArea.firstChild)
+                        displayArea.removeChild(displayArea.firstChild);
+                    displayArea.textContent = "Lade Dokumentation";
+                    displayArea.innerHTML = content;
+
+                }(...args);
+                let resumeValue;
+                for (;;) {
+                    const n = parseDisplayArea.next(resumeValue);
+                    if (n.done)
+                        return n.value;
+                    resumeValue = await n.value;
+                    if (localNonce !== globalNonce)
+                        return;
+                }
+            }
+        }
+
+
+
+        /*function parseExternSources(content, intervalTime) {
+            return new Promise(resolve=> {
+
+                clearInterval(externSourcesInterval);
+                externSourcesArea.textContent = "Die Liste wird gerade erstellt, bitte haben Sie ein wenig Geduld.";
+                let externOutput = "<ul>";
+                let externEntriesArray = content["extern"].split("#");
+                let i = 0;
+                function processExternEntry() {
+                    let externEntry = externEntriesArray[i].split(">");
+                    externOutput += `<li><a href=${externEntry[1]}>${externEntry[0]}</a></li>`;
+                    i++;
+                    if(i >= externEntriesArray.length) {
+                        externSourcesArea.innerHTML = "<h2>Externe Referenzen</h2>" + externOutput + "</ul>";
+                        clearInterval(externSourcesInterval);
+                        resolve();
+                    }
+                }
+                externSourcesInterval = setInterval(processExternEntry, (intervalTime) ? intervalTime : 0);
+            });
+        }*/
+
+        function backToStart() {
+            while(subMenuButtons.firstChild)
+                subMenuButtons.removeChild(subMenuButtons.firstChild);
+            for (let i = 0; i < mainMenuButtons.children.length - 1; ++i)
+                mainMenuButtons.children[i].disabled = false;
+            displayArea.innerHTML = "<h2>Willkommen</h2><p>Bitte wählen sie ein Oberthema und dann einen Begriff auf der linken Seite, um sich eine Dokumentation anzeigen zu lassen.</p>";
+            externSourcesArea.innerHTML = "<p>Hier werden Links zu externen Ressourcen erscheinen</p>";
+        }
+
+        window.onpopstate = undoManager.undo;
+
+    })();
+</script>
 </body>
 </html>
+
