@@ -2,9 +2,134 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Barchart</title>
+    <link href="../css/allgemein.css" type="text/css" rel="stylesheet">
+    <style>
+        bar-chart{
+            position: absolute;
+            top:10%;
+            left: 30%;
+        }
+    </style>
 </head>
 <body>
-
+<bar-chart></bar-chart>
 </body>
 </html>
+
+<script type="module">
+
+    let data ;
+    getJsonData();
+
+    async function getJsonData() {
+        /*await hat nicht geklappt, da lit-element immer data vorher schon benötigt hatte und deswegen einen Fehler ausgegen hatte
+        data = await fetch('./data/data.json');
+        data = await data.text();
+        data = await JSON.parse(data);
+        */
+        data = JSON.parse('{ '+
+            '"title": "Durchschnittstemperaturen pro Monat im Jahr X", '+
+            '"xAxis": ["Monat1", "Monat2", "Monat3", "Monat4"], '+
+            '"yAxis": { '+
+            '"labels": ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90","100" ], '+
+            '"unit": "°F" '+
+            '}, '+
+            '"data": ["50", "75", "100", "89"] '+
+            '}');
+        console.log(data);
+    }
+
+
+    import { LitElement, html, css, svg } from "https://unpkg.com/lit-element/lit-element.js?module";
+
+    class Barchart extends LitElement {
+        static get properties() {
+            return {
+                title: String,
+                xAxis: Array,
+                labels: Array,
+                unit: String,
+                myData: Array
+            }
+        }
+
+        static get styles() {
+            return css`
+                * {
+                    font-family: 'Roboto', sans-serif;
+                    color: #3E5E69;
+                    fill: #3E5E69;
+                }
+
+                #header{
+                    font-size: 30px;
+                }
+                .bar:hover {
+                    fill:white;
+
+                }
+
+                .bar:hover width {
+                    display: block;
+                    color: white;
+                }
+            `;
+        }
+
+        render() {
+            return svg`
+            <svg width="1000" height="500">
+                <text id="header" x="50" y="100" >${this.title}</text>
+
+                <text x="50" y="300" >${this.xAxis[0]}</text>
+                <text x="50" y="250" >${this.xAxis[1]}</text>
+                <text x="50" y="200" >${this.xAxis[2]}</text>
+                <text x="50" y="150" >${this.xAxis[3]}</text>
+
+                <text x="150" y="330" >${this.yAxis.labels[0]}</text>
+                <text x="250" y="330" >${this.yAxis.labels[1]}</text>
+                <text x="350" y="330" >${this.yAxis.labels[2]}</text>
+                <text x="450" y="330" >${this.yAxis.labels[3]}</text>
+                <text x="550" y="330" >${this.yAxis.labels[4]}</text>
+                <text x="650" y="330" >${this.yAxis.labels[5]}</text>
+                <text x="750" y="330" >${this.yAxis.labels[6]}</text>
+                <text x="850" y="330" >${this.yAxis.labels[7]}</text>
+                <text x="950" y="330" >${this.yAxis.labels[8]}</text>
+                <text x="1050" y="330"  >${this.yAxis.labels[9]}</text>
+
+                <text x="620" y="360"  >${this.unit}</text>
+
+                <line x1="150" y1="315" x2="150" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="250" y1="315" x2="250" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="350" y1="315" x2="350" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="450" y1="315" x2="450" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="550" y1="315" x2="550" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="650" y1="315" x2="650" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="750" y1="315" x2="750" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="850" y1="315" x2="850" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="950" y1="315" x2="950" y2="130" stroke="white" stroke-width="1"></line>
+                <line x1="1050" y1="315" x2="1050" y2="130" stroke="white" stroke-width="1"></line>
+
+                <rect class="bar" x="150" y="290" width="${10*this.my_Data[0]}" height="20" fill="black" value="${10*this.my_Data[0]}"></rect>
+                <rect class="bar" x="150" y="240" width="${10*this.my_Data[1]}" height="20" fill="grey"></rect>
+                <rect class="bar" x="150" y="190" width="${10*this.my_Data[2]}" height="20" fill="lightblue"></rect>
+                <rect class="bar" x="150" y="140" width="${10*this.my_Data[3]}" height="20" fill="lightgrey"></rect>
+            </svg>
+            `;
+        }
+
+         constructor() {
+            super();
+
+             this.title = data.title;
+             this.xAxis = data.xAxis;
+             this.yAxis = data.yAxis;
+             this.labels = data.yAxis.labels;
+             this.unit = data.yAxis.unit;
+             this.my_Data=  data.data;
+        }
+    }
+
+    customElements.define("bar-chart", Barchart);
+</script>

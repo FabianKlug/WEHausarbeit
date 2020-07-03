@@ -99,16 +99,16 @@
     const undoButton = document.getElementById('undo');
     (async function() {
         try {
-            var navigationStructure = await (await fetch('./data.json')).json();
+            let navigationStructure = await (await fetch('./data/data.json')).json();
         } catch (error) {
             console.log(`Fehler beim Laden der Navigation: ${error.name}: ${error.message}`);
             displayArea.innerHTML = '<h2>Leider konnte die Navigation nicht geladen werden. Bitte versuchen sie es später noch mal.<br>Sollte das Problem weiterhin bestehen, so kontaktieren sie bitte den Webseitenbetreiber.</h2>';
         }
 
-        var externSourcesInterval;
-        var parseDisplayArea = parseDisplayAreaFunction();
-        var undoManager = (function() {
-            var undoStack = [];
+        let externSourcesInterval;
+        let parseDisplayArea = parseDisplayAreaFunction();
+        let undoManager = (function() {
+            let undoStack = [];
             return {
                 undo: function() {
                     if (undoStack.length > 0) {
@@ -214,7 +214,7 @@
         function parseDisplayAreaFunction() {
             let globalNonce;
             return async function(...args) {
-                const localNonce = globalNonce = new Object();
+                const localNonce = globalNonce = {};
                 const parseDisplayArea = function*(content) {
                     while (displayArea.firstChild)
                         displayArea.removeChild(displayArea.firstChild);
@@ -234,29 +234,6 @@
             }
         }
 
-
-
-        /*function parseExternSources(content, intervalTime) {
-            return new Promise(resolve=> {
-
-                clearInterval(externSourcesInterval);
-                externSourcesArea.textContent = "Die Liste wird gerade erstellt, bitte haben Sie ein wenig Geduld.";
-                let externOutput = "<ul>";
-                let externEntriesArray = content["extern"].split("#");
-                let i = 0;
-                function processExternEntry() {
-                    let externEntry = externEntriesArray[i].split(">");
-                    externOutput += `<li><a href=${externEntry[1]}>${externEntry[0]}</a></li>`;
-                    i++;
-                    if(i >= externEntriesArray.length) {
-                        externSourcesArea.innerHTML = "<h2>Externe Referenzen</h2>" + externOutput + "</ul>";
-                        clearInterval(externSourcesInterval);
-                        resolve();
-                    }
-                }
-                externSourcesInterval = setInterval(processExternEntry, (intervalTime) ? intervalTime : 0);
-            });
-        }*/
 
         function backToStart() {
             while(subMenuButtons.firstChild)

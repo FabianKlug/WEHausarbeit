@@ -2,134 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Animation Bezierkurve</title>
+    <title>Title</title>
 </head>
 <body>
-<lit-drag>
-
-</lit-drag>
+<drag-and-drop></drag-and-drop>
 </body>
 </html>
 <script type="module">
+    import { LitElement, html, css, svg } from 'https://unpkg.com/lit-element/lit-element.js?module';
 
-    import { LitElement, html, css, svg } from 'https://unpkg.com/lit-element?module';
-
-    class LitDrag extends LitElement {
-
+    class DragAndDrop extends LitElement {
         static get properties() {
             return {
-                x_Punkt1: Number,
-                y_Punkt1: Number,
-
-                x_Punkt2: Number,
-                y_Punkt2: Number,
-
-                x_Punkt3: Number,
-                y_Punkt3: Number,
+                point1x: Number,
+                point1y: Number,
+                point2x: Number,
+                point2y: Number,
+                point3x: Number,
+                point3y: Number,
             }
         }
 
         constructor() {
-
             super();
-            this.x_Punkt1 = 50;
-            this.y_Punkt1 = 400;
-
-            this.x_Punkt2 = 350;
-            this.y_Punkt2 = 50;
-
-            this.x_Punkt3 = 250;
-            this.y_Punkt3 = 300;
-
-
+            this.point1x = 50;
+            this.point1y = 300;
+            this.point2x = 150;
+            this.point2y = 50;
+            this.point3x = 250;
+            this.point3y = 300;
         }
 
         render() {
             return html`
-                <button @click="${this.clickHandler()}"></button>
-                <svg width="600" height="600">
+                <button @click="${this.run}">Click me!</button>
+                <svg width="500" height="500">
                     <g stroke="black" stroke-width="3" fill="black">
-                        <circle id="kreis1" class="draggable" cx="${this.x_Punkt1}" cy="${this.y_Punkt1}" r="6"></circle>
-                        <circle id="kreis2" class="draggable" cx="${this.x_Punkt2}" cy="${this.y_Punkt2}" r="6"></circle>
-                        <circle id="kreis3" class="draggable" cx="${this.x_Punkt3}" cy="${this.y_Punkt3}" r="6"></circle>
+                        <circle class="draggable" cx="${this.point1x}" cy="${this.point1y}" r="6"></circle>
+                        <circle class="draggable" cx="${this.point2x}" cy="${this.point2y}" r="6"></circle>
+                        <circle class="draggable" cx="${this.point3x}" cy="${this.point3y}" r="6"></circle>
                     </g>
-                    <path d="M ${this.x_Punkt1} ${this.y_Punkt1} L ${this.x_Punkt2} ${this.y_Punkt2}" stroke-width="1"
+                    <path d="M ${this.point1x} ${this.point1y} L ${this.point2x} ${this.point2y}" stroke-width="1"
                         stroke="lightgrey"></path>
-                    <path d="M ${this.x_Punkt2} ${this.y_Punkt2} L ${this.x_Punkt3} ${this.y_Punkt3}" stroke-width="1"
+                    <path d="M ${this.point2x} ${this.point2y} L ${this.point3x} ${this.point3y}" stroke-width="1"
                         stroke="lightgrey"></path>
-                    <path d="M ${this.x_Punkt1} ${this.y_Punkt1} Q ${this.x_Punkt2} ${this.y_Punkt2} ${this.x_Punkt3} ${this.y_Punkt3}"
+                    <path d="M ${this.point1x} ${this.point1y} Q ${this.point2x} ${this.point2y} ${this.point3x} ${this.point3y}"
                         stroke-width="2" stroke="black" fill="none"></path>
                 </svg>`;
         }
 
-        clickHandler() {
-            console.log("Hallo")
-            var shadow = this.shadowRoot;
-            //const draggables = shadow.querySelectorAll('.draggable');
-            let draggables = [];
-            draggables.push(shadow.getElementById("kreis1"));
-            draggables.push(shadow.getElementById("kreis2"));
-            draggables.push(shadow.getElementById("kreis3"));
-
-            shadow.getElementById("kreis1").addEventListener('mousedown' , startDrag);
-
+        run() {
+            let shadow = this.shadowRoot;
+            const draggables = shadow.querySelectorAll('.draggable');
             console.log(draggables);
-
-            for(var i = 0; i < 3; i++) {
+            for(let i = 0; i < 3; i++) {
                 makeDraggable(draggables[i], i);
             }
-
             function makeDraggable(elem, j) {
                 elem.addEventListener('mousedown', startDrag);
                 elem.addEventListener('mousemove', drag);
                 elem.addEventListener('mouseup', endDrag);
                 elem.addEventListener('mouseleave', endDrag);
                 let selectedElement, offset;
-            }
-
-            function startDrag(evt) {
-                if (evt.target.classList.contains('draggable')) {
-                    selectedElement = evt.target;
-                    offset = getMousePosition(evt);
-                    offset.x -= parseFloat(selectedElement.getAttribute("cx"));
-                    offset.y -= parseFloat(selectedElement.getAttribute("cy"));
-                }
-            }
-            function drag(evt) {
-                if (selectedElement) {
-                    evt.preventDefault();
-                    var coord = getMousePosition(evt);
-                    console.log(coord)
-                    if(j === 0) {
-                        selectedElement.setAttribute("cx", coord.x - offset.x);
-                        selectedElement.setAttribute("cy", coord.y - offset.y);
-                        this.x_Punkt1 = coord.x - offset.x;
-                        this.y_Punkt1 = coord.y - offset.y;
-                    } else if(j === 1) {
-                        selectedElement.setAttribute("cx", coord.x - offset.x);
-                        selectedElement.setAttribute("cy", coord.y - offset.y);
-                        this.x_Punkt2 = coord.x - offset.x;
-                        this.y_Punkt2 = coord.y - offset.y;
-                    } else if(j === 2) {
-                        selectedElement.setAttribute("cx", coord.x - offset.x);
-                        selectedElement.setAttribute("cy", coord.y - offset.y);
-                        this.x_Punkt3 = coord.x - offset.x;
-                        this.y_Punkt3 = coord.y - offset.y;
+                function startDrag(evt) {
+                    if (evt.target.classList.contains('draggable')) {
+                        selectedElement = evt.target;
+                        offset = getMousePosition(evt);
+                        offset.x -= parseFloat(selectedElement.getAttribute("cx"));
+                        offset.y -= parseFloat(selectedElement.getAttribute("cy"));
                     }
                 }
-            }
-            function endDrag(evt) {
-                selectedElement = null;
-            }
-            function getMousePosition(evt) {
-                var CTM = shadow.querySelector('svg').getScreenCTM();
-                return {
-                    x: (evt.clientX - CTM.e) / CTM.a,
-                    y: (evt.clientY - CTM.f) / CTM.d
-                };
+                function drag(evt) {
+                    if (selectedElement) {
+                        evt.preventDefault();
+                        let coord = getMousePosition(evt);
+                        if(j === 0) {
+                            selectedElement.setAttribute("cx", coord.x - offset.x);
+                            selectedElement.setAttribute("cy", coord.y - offset.y);
+                            this.point1x = coord.x - offset.x;
+                            this.point1y = coord.y - offset.y;
+                        } else if(j === 1) {
+                            selectedElement.setAttribute("cx", coord.x - offset.x);
+                            selectedElement.setAttribute("cy", coord.y - offset.y);
+                            this.point2x = coord.x - offset.x;
+                            this.point2y = coord.y - offset.y;
+                        } else if(j === 2) {
+                            selectedElement.setAttribute("cx", coord.x - offset.x);
+                            selectedElement.setAttribute("cy", coord.y - offset.y);
+                            this.point3x = coord.x - offset.x;
+                            this.point3y = coord.y - offset.y;
+                        }
+                    }
+                }
+                function endDrag(evt) {
+                    selectedElement = null;
+                }
+                function getMousePosition(evt) {
+                    let CTM = shadow.querySelector('svg').getScreenCTM();
+                    return {
+                        x: (evt.clientX - CTM.e) / CTM.a,
+                        y: (evt.clientY - CTM.f) / CTM.d
+                    };
+                }
             }
         }
     }
 
-    customElements.define('lit-drag', LitDrag);
+    customElements.define('drag-and-drop', DragAndDrop);
 </script>

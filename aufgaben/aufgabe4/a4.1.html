@@ -2,156 +2,167 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Funktionen Teil1</title>
+    <link href="../css/allgemein.css" rel="stylesheet" type="text/css">
+    <style>
+        * {
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <p>
-        function identity_function(arg) {
-            return function() {
-                return arg;
-            }
-        }
-    </p>
+<p>
+    function identity_function(arg) {
+    return function() {
+    return arg;
+    }
+    }
+</p>
 
-    <p>
-        function identity_function(arg) {
-        return function() {
-        return arg;
-        }
-        }
-    </p>
+<p>
+    function identity_function(arg) {
+    return function() {
+    return arg;
+    }
+    }
+</p>
 
-    <p>
-        function applyf(func) {
-        return function(arg1) {
-        return function(arg2) {
-        return func(arg1,arg2);
-        }
-        }
-        }
-    </p>
+<p>
+    function applyf(func) {
+    return function(arg1) {
+    return function(arg2) {
+    return func(arg1,arg2);
+    }
+    }
+    }
+</p>
 
-    <p>
-        function curry(func, arg1) {
-        return function(arg2) {
-        return func(arg1, arg2);
-        }
-        }
-    </p>
+<p>
+    function curry(func, arg1) {
+    return function(arg2) {
+    return func(arg1, arg2);
+    }
+    }
+</p>
 
-    <p>
+<p>
 
 
-        function inc(x) {
-        return addf(x)(1);
-        }
-    </p>
+    function inc(x) {
+    return addf(x)(1);
+    }
+</p>
 
-    <p>
+<p>
 
-        function methodize(func) {
-        return function(y) {
-        return func(this,y);
-        }
-        }
-    </p>
+    function methodize(func) {
+    return function(y) {
+    return func(this,y);
+    }
+    }
+</p>
 
-    <p>
+<p>
 
-        function demethodize(method) {
-        return function(arg1, arg2) {
-        return method.call(arg1, arg2);
-        }
-        }
-    </p>
+    function demethodize(method) {
+    return function(arg1, arg2) {
+    return method.call(arg1, arg2);
+    }
+    }
+</p>
 
-    <p>
+<p>
 
-        function twice(func) {
-        return function(arg) {
-        return func(arg,arg);
-        }
-        }
-    </p>
+    function twice(func) {
+    return function(arg) {
+    return func(arg,arg);
+    }
+    }
+</p>
 
-    <p>
+<p>
 
-        function composeu(func1, func2) {
-        return function(arg) {
-        return func2(func1(arg));
-        }
-        }
-    </p>
+    function composeu(func1, func2) {
+    return function(arg) {
+    return func2(func1(arg));
+    }
+    }
+</p>
 
-    <p>
+<p>
 
-        function once(func) {
-        var test = true;
-        if(test) {
-        test = false;
-        return function(arg1, arg2) {
-        func(arg1, arg2);
-        }
-        }
-        console.log("Fehler");
-        }
-    </p>
+    function once(func) {
+    let test = true;
+    if(test) {
+    test = false;
+    return function(arg1, arg2) {
+    func(arg1, arg2);
+    }
+    }
+    console.log("Fehler");
+    }
+</p>
 
-    <p>
+<p>
 
-        function counterf(arg) {
-        var counter = {};
-        counter.value = arg;
-        animal.inc = function() {
-        this.value++;
-        console.log(this.value);
-        }
-        animal.dec = function() {
-        this.value--;
-        console.log(this.value);
-        }
-        return counter;
-        }
-    </p>
+    function counterf(arg) {
+    let counter = {};
+    counter.value = arg;
+    animal.inc = function() {
+    this.value++;
+    console.log(this.value);
+    }
+    animal.dec = function() {
+    this.value--;
+    console.log(this.value);
+    }
+    return counter;
+    }
+</p>
 
-    <p>
+<p>
 
-        function revocable(func) {
-        var test = true;
-        function invoke(arg1) {
-        if(test) {
-        return func(arg1);
-        }
-        }
-        function revoke() {
-        test = false;
-        }
-        }
-    </p>
+    function revocable(func) {
+    let test = true;
+    function invoke(arg1) {
+    if(test) {
+    return func(arg1);
+    }
+    }
+    function revoke() {
+    test = false;
+    }
+    }
+</p>
+
+<p>
+    function arrayWrapper(arr) { let arr = arr; arr.elements = new Array(); arr.size = 0; arr.get = function(x) { return
+    arr[x]; } arr.store = function(arg) { arr.push(arg); } arr.append = function (arg) { arr.push(arg); } }
+</p>
 
 <script>
     function identity_function(arg) {
-        return function() {
+        return function () {
             return arg;
         }
     }
 
     function addf(x) {
-        return function(y) {
+        return function (y) {
             return x + y;
         }
     }
 
     function applyf(func) {
-        return function(arg1) {
-            return function(arg2) {
-                return func(arg1,arg2);
+        return function (arg1) {
+            return function (arg2) {
+                return func(arg1, arg2);
             }
         }
     }
 
     function curry(func, arg1) {
-        return function(arg2) {
+        return function (arg2) {
             return func(arg1, arg2);
         }
     }
@@ -161,34 +172,34 @@
     }
 
     function methodize(func) {
-        return function(y) {
-            return func(this,y);
+        return function (y) {
+            return func(this, y);
         }
     }
 
     function demethodize(method) {
-        return function(arg1, arg2) {
+        return function (arg1, arg2) {
             return method.call(arg1, arg2);
         }
     }
 
     function twice(func) {
-        return function(arg) {
-            return func(arg,arg);
+        return function (arg) {
+            return func(arg, arg);
         }
     }
 
     function composeu(func1, func2) {
-        return function(arg) {
+        return function (arg) {
             return func2(func1(arg));
         }
     }
 
     function once(func) {
-        var test = true;
-        if(test) {
+        let test = true;
+        if (test) {
             test = false;
-            return function(arg1, arg2) {
+            return function (arg1, arg2) {
                 func(arg1, arg2);
             }
         }
@@ -196,13 +207,13 @@
     }
 
     function counterf(arg) {
-        var counter = {};
+        let counter = {};
         counter.value = arg;
-        animal.inc = function() {
+        animal.inc = function () {
             this.value++;
             console.log(this.value);
         }
-        animal.dec = function() {
+        animal.dec = function () {
             this.value--;
             console.log(this.value);
         }
@@ -210,12 +221,14 @@
     }
 
     function revocable(func) {
-        var test = true;
+        let test = true;
+
         function invoke(arg1) {
-            if(test) {
+            if (test) {
                 return func(arg1);
             }
         }
+
         function revoke() {
             test = false;
         }

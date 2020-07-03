@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Funktionen Teil2</title>
+    <link href="../css/allgemein.css" rel="stylesheet" type="text/css">
+    <style>
+        * {
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
 <p>
 
     function queue() {
-    var queue = {};
+    let queue = {};
     queue.elements = new Array();
     queue.size = 0;
     queue.insert = function(arg) {
@@ -32,7 +38,7 @@
 <p>
 
     function unOrdSet() {
-    var unOrdSet = {};
+    let unOrdSet = {};
     unOrdSet.elements = new Array();
     unOrdSet.size = 0;
     unOrdSet.insert = function(arg) {
@@ -44,7 +50,7 @@
     }
     }
     unOrdSet.remove = function(arg) {
-    var index = this.elements.indexOf(arg);
+    let index = this.elements.indexOf(arg);
     if(index != -1) {
     this.size--;
     return this.elements.splice(index, 1);
@@ -63,14 +69,14 @@
 
 
     function UnOrdMultSet() {
-    var multset = {};
+    let multset = {};
     multset.elements = new Array();
     multset.size = 0;
     multset.insert = function(arg) {
     this.elements.push(arg);
     }
     multset.remove = function(arg) {
-    var index = this.elements.indexOf(arg);
+    let index = this.elements.indexOf(arg);
     if(index != -1) {
     this.size--;
     return this.elements.splice(index, 1);
@@ -86,7 +92,7 @@
 </p>
 <script>
     function queue() {
-        var queue = {};
+        let queue = {};
         queue.elements = new Array();
         queue.size = 0;
         queue.insert = function(arg) {
@@ -106,7 +112,7 @@
     }
 
     function unOrdSet() {
-        var unOrdSet = {};
+        let unOrdSet = {};
         unOrdSet.elements = new Array();
         unOrdSet.size = 0;
         unOrdSet.insert = function(arg) {
@@ -118,7 +124,7 @@
             }
         }
         unOrdSet.remove = function(arg) {
-            var index = this.elements.indexOf(arg);
+            let index = this.elements.indexOf(arg);
             if(index != -1) {
                 this.size--;
                 return this.elements.splice(index, 1);
@@ -134,14 +140,14 @@
 
 
     function UnOrdMultSet() {
-        var multset = {};
+        let multset = {};
         multset.elements = new Array();
         multset.size = 0;
         multset.insert = function(arg) {
             this.elements.push(arg);
         }
         multset.remove = function(arg) {
-            var index = this.elements.indexOf(arg);
+            let index = this.elements.indexOf(arg);
             if(index != -1) {
                 this.size--;
                 return this.elements.splice(index, 1);
