@@ -9,7 +9,7 @@
             width: 100%;
             margin: 0;
             padding: 0;
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../wwwnav.jpg);
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url('../bilder/wwwnav.jpg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -23,16 +23,18 @@
             min-height: 100%;
         }
 
+
+
         header {
             display: flex;
-            padding: 5px 5px 5px 5px;
+            padding: 5px 5px 5px 20px;
         }
 
         #mehrspaltig {
             flex: 1;
             display: flex;
             flex-direction: row;
-
+            font-size: 25px;
         }
 
         nav {
@@ -42,24 +44,34 @@
 
         article {
             flex: 4;
-
-        }
-
-        aside {
-            flex: 1;
+            padding: 20px 20px 20px 20px
 
         }
 
         footer {
 
         }
+        header h1 {
+            font-size: 35px;
+            color : #231F20;
+        }
+
         header ul li {
             float: left;
             padding-right: 20px;
+            padding-top: 10px;
             list-style-type: none;
-
-
         }
+
+        header ul li a{
+            font-size: 35px;
+            color: #231F20;
+        }
+
+        ul li a:focus{
+            text-decoration: underline;
+        }
+
         header a {
             text-align: center;
             font-size: 3vh;
@@ -69,18 +81,18 @@
 
         }
         header li a:hover {
-
             background-color: white;
             color: #5D5E5F;
-            transform: scale(1.5);
             opacity: 1;
         }
+
 
         footer ul li  {
             display: flex;
             flex-direction: row;
             float: left;
             padding-right: 20px;
+            padding-bottom: 10px;
             list-style-type: none;
         }
 
@@ -107,6 +119,11 @@
             color: white;
             padding: 5px 5px;
         }
+
+        aside ul li a{
+            font-size: 30px;
+        }
+
         aside li a:hover {
 
             background-color: white;
@@ -116,20 +133,22 @@
         }
 
 
+
+
     </style>
 </head>
 <body>
 
-
-
 <div id="wrapper">
     <header>
+        <img src ="../bilder/html5.png" width="75em" height="75em" alt="text"/>
+        <!-- https://browsergameita.com/explore/html5-logo-png.html -->
         <h1>WWW Navigator</h1>
         <ul>
-            <li><a href="#" target="" id="link_html">HTML</a></li>
-            <li><a href="#" target="" id="link_css">CSS</a></li>
-            <li><a href="#" target="" id="link_js">JavaScript</a></li>
-            <li><a href="#" target="" id="link_other">Other</a></li>
+            <li><a href="#" target="" id="link_html" class="obermenu">HTML</a></li>
+            <li><a href="#" target="" id="link_css" class="obermenu">CSS</a></li>
+            <li><a href="#" target="" id="link_js" class="obermenu">JavaScript</a></li>
+            <li><a href="#" target="" id="link_other" class="obermenu">Other</a></li>
         </ul>
     </header>
     <div id="mehrspaltig">
@@ -139,11 +158,9 @@
             </ul>
         </aside>
         <article>
-            <p id="text">
+            <p id="text">            </p>
+        </article>
 
-            </p>
-            </article>
-        <aside>Referenzen:</aside>
     </div>
     <footer>
 
@@ -171,78 +188,123 @@
     link_js.addEventListener("click", show_js);
     link_other.addEventListener("click", show_other);
 
+    const text = document.getElementById("text");
+
+
+    let aktLinks = [];
+    let aktiv = "html";
+
     async function show_html() {
         document.getElementById("liste").innerHTML="";
+        aktiv = "html";
         let response1 = await fetch("./content.json");
         response1 = await response1.json();
 
         //Navigationsleiste links
-        for( let index = 0; index < Object.keys(response1.html.headings.html).length; index++) {
-            let text = "";
-            text = Object.values(response1.html.headings.html);
+        for( let index = 0; index < Object.keys(response1.html).length; index++) {
+            let links = Object.keys(response1.html);
+            let tmp_text = links[index];
 
             let listItem = document.createElement("li");
-            listItem.innerHTML= `<a href='#' id=${text[index]}> ${text[index]} </a>`;
+            listItem.innerHTML= `
+                <a href='#' class="untermenu"
+                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    ${links[index]}
+                </a>`;
             document.getElementById("liste").appendChild(listItem);
         }
-        document.getElementById("text").innerText = response1.html.paragraphs.html;
 
-        //Unterüberschriften
-        const link2 = document.getElementsByTagName("a");
+        //html startseite
+        text.innerText = response1.html.starttext.value;
+    }
 
+    async function submenu_Click(tmp_text) {
+        let response1 = await fetch("./content.json");
+        response1 = await response1.json();
 
-        for(let i = 0; i < link2.length; i++) {
-            console.log(link2[i])
+        text.innerText = "Hier soll der text von " + tmp_text + " hin!"
+
+        if(Object.keys(response1).indexOf(aktiv) !== -1 &&
+            Object.keys(Object.values(response1)[Object.keys(response1).indexOf(aktiv)]).indexOf(tmp_text) !== -1) {
+
+            let oberindex = Object.keys(response1).indexOf(aktiv);
+            let unterindex = Object.keys(Object.values(response1)[Object.keys(response1).indexOf(aktiv)]).indexOf(tmp_text);
+            let inhalt = Object.values(Object.values(response1)[oberindex])[unterindex].value;
+
+            text.innerText = inhalt;
         }
     }
+
+
+    //ruft die css_inhalte auf mit der ersten seite als
     async function show_css() {
+        aktiv = "css";
         let response1 = await fetch("./content.json");
         response1 = await response1.json();
         document.getElementById("liste").innerHTML="";
 
-
-
         //Navigationsleiste links
-        for( let index = 0; index < Object.keys(response1.html.headings.css).length; index++) {
+        for( let index = 0; index < Object.keys(response1.css).length; index++) {
+            let links = Object.keys(response1.css);
+            let tmp_text = links[index];
 
             let listItem = document.createElement("li");
-            listItem.innerHTML= `<a href='#'> ${Object.values(response1.html.headings.css)[index]} </a>`;
+            listItem.innerHTML= `
+                <a href='#' class="untermenu"
+                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    ${links[index]}
+                </a>`;
             document.getElementById("liste").appendChild(listItem);
         }
-
-        document.getElementById("text").innerText = response1.html.paragraphs.css;
+        //css startseite
+        text.innerText ="Hier lesen sie etwas zu CSS"
     }
     async function show_js() {
+        aktiv = "javascript";
         let response1 = await fetch("./content.json");
         response1 = await response1.json();
         document.getElementById("liste").innerHTML="";
 
         //Navigationsleiste links
-        for( let index = 0; index < Object.keys(response1.html.headings.javascript).length; index++) {
+        for( let index = 0; index < Object.keys(response1.javascript).length; index++) {
+            let links = Object.keys(response1.javascript);
+            let tmp_text = links[index];
 
             let listItem = document.createElement("li");
-            listItem.innerHTML= `<a href='#'> ${Object.values(response1.html.headings.javascript)[index]} </a>`;
+            listItem.innerHTML= `
+                <a href='#' class="untermenu"
+                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    ${links[index]}
+                </a>`;
             document.getElementById("liste").appendChild(listItem);
-        }
 
-        document.getElementById("text").innerText = response1.html.paragraphs.javascript;
+            //JavaScript startseite
+            text.innerText ="Hier lesen sie etwas zu JavaScript"
+        }
 
     }
     async function show_other() {
+        aktiv = "other";
         let response1 = await fetch("./content.json");
         response1 = await response1.json();
         document.getElementById("liste").innerHTML="";
 
         //Navigationsleiste links
-        for( let index = 0; index < Object.keys(response1.html.headings.other).length; index++) {
+        for( let index = 0; index < Object.keys(response1.other).length; index++) {
+            let links = Object.keys(response1.other);
+            let tmp_text = links[index];
 
             let listItem = document.createElement("li");
-            listItem.innerHTML= `<a href='#'> ${Object.values(response1.html.headings.other)[index]} </a>`;
+            listItem.innerHTML= `
+                <a href='#' class="untermenu"
+                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    ${links[index]}
+                </a>`;
             document.getElementById("liste").appendChild(listItem);
+
+            //Other startseite
+            text.innerText ="Hier lesen sie etwas zu Other"
         }
-
-        document.getElementById("text").innerText = response1.html.paragraphs.other;
-
     }
 
     window.onload = () => {
