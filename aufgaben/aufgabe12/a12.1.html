@@ -32,7 +32,7 @@
     <button id="reg" class="button" name="registrieren"> Registrieren </button>
 
 </form>
-    <?php
+<?php
 
     ob_start();
 
@@ -40,36 +40,34 @@
         $nutzername = $_POST['nutzername'];
         $passwort = $_POST['passwort'];
 
-
-
         if(!empty($nutzername) && !empty($passwort)) {
             $SALT = '#khaszi398fhlkvkhjewoiu+';
             $file = "./etc/daten.csv";
             $zeile = $nutzername.','.hash("sha384",$passwort . $SALT)."\n";
 
             if ( file_put_contents( $file, $zeile, FILE_APPEND | LOCK_EX ) ){
-                echo "$nutzername, erfolgreich registiert. <script>alert('Registered successfully!')</script>";
+                echo "$nutzername,'erfolgreich registiert. ";
             }
 
-        } else {
-            echo 'Nicht alle Felder sind ausgefüllt worden';
-            die();
-        }
-    }
+            } else {
+                echo 'Nicht alle Felder sind ausgefüllt worden';
+                die();
+            }
+            }
 
 
     ?>
 
 
 <script>
-    const user = document.getElementById("username");
-    const passwort = document.getElementById("pw");
-    const button = document.getElementById("reg");
+const user = document.getElementById("username");
+const passwort = document.getElementById("pw");
+const button = document.getElementById("reg");
 
-    button.addEventListener("click", ()=>{
-        //console.dir(user.value);
-        //console.log(user.value);
-    })
+button.addEventListener("click", ()=>{
+    //console.dir(user.value);
+    //console.log(user.value);
+})
 
 </script>
 </body>
