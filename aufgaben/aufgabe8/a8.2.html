@@ -27,6 +27,8 @@
         data = await fetch('./data/data.json');
         data = await data.text();
         data = await JSON.parse(data);
+
+        console.log(data);
         */
         data = JSON.parse('{ '+
             '"title": "Durchschnittstemperaturen pro Monat im Jahr X", '+
@@ -35,7 +37,7 @@
             '"labels": ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90","100" ], '+
             '"unit": "°F" '+
             '}, '+
-            '"data": ["50", "75", "100", "89"] '+
+            '"data": ["50", "75", "79", "85"] '+
             '}');
         console.log(data);
     }
@@ -79,6 +81,7 @@
 
         render() {
             return svg`
+
             <svg width="1000" height="500">
                 <text id="header" x="50" y="100" >${this.title}</text>
 
@@ -111,7 +114,7 @@
                 <line x1="950" y1="315" x2="950" y2="130" stroke="white" stroke-width="1"></line>
                 <line x1="1050" y1="315" x2="1050" y2="130" stroke="white" stroke-width="1"></line>
 
-                <rect class="bar" x="150" y="290" width="${10*this.my_Data[0]}" height="20" fill="black" value="${10*this.my_Data[0]}"></rect>
+                <rect class="bar" x="150" y="290" width="${10*this.my_Data[0]}" height="20" fill="black" ></rect>
                 <rect class="bar" x="150" y="240" width="${10*this.my_Data[1]}" height="20" fill="grey"></rect>
                 <rect class="bar" x="150" y="190" width="${10*this.my_Data[2]}" height="20" fill="lightblue"></rect>
                 <rect class="bar" x="150" y="140" width="${10*this.my_Data[3]}" height="20" fill="lightgrey"></rect>
@@ -128,6 +131,7 @@
              this.labels = data.yAxis.labels;
              this.unit = data.yAxis.unit;
              this.my_Data=  data.data;
+
         }
     }
 

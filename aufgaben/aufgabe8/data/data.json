@@ -1,9 +1,9 @@
 {
-  "title": "Durchschnittstemperaturen pro Monat im Jahr 2018",
-  "xAxis": ["Monat1", "Monat2", "Monat3", "Monat4"],
-  "yAxis": {
-    "labels": ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90","100" ],
-    "unit": "°F"
-  },
-  "data": ["50", "75", "100", "89"]
+    "title": "Durchschnittstemperaturen pro Monat im Jahr 2018",
+    "xAxis": ["Monat1", "Monat2", "Monat3", "Monat4"],
+    "yAxis": {
+      "labels": ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90","100" ],
+      "unit": "°F"
+    },
+    "data": ["50", "75", "100", "89"]
 }
