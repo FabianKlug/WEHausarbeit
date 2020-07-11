@@ -11,14 +11,14 @@ h1{
 }
 
 header{
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../wwwnav.jpg);
+
     height: 100vh;
     background-size: cover;
     background-position: center;
 }
 
 body {
-    background: url(../bild.jpg) no-repeat center center fixed;
+    background: url(../bilder/bild.jpg) no-repeat center center fixed;
     /*bildquelle: https://pxhere.com/en/photo/1430373*/
     -webkit-background-size: cover;
     -moz-background-size: cover;

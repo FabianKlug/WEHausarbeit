@@ -36,8 +36,8 @@
 <script>
     Vue.component('menu-component', {
         props: ['horizontal'],
-        template: '<div v-if=horizontal><button v-for="button in buttons" @click="doSomething(button.title)">{{button.title}}</button></div>' +
-            '<div v-else style="display:flex;flex-direction: column"><button v-for="button in buttons" @click="doSomething(button.title)">{{button.title}}</button></div>',
+        template: '<div v-if=horizontal><button v-for="button in buttons">{{button.title}}</button></div>' +
+            '<div v-else style="display:flex;flex-direction: column"><button v-for="button in buttons">{{button.title}}</button></div>',
         data: function() {
             return {
                 buttons : [
@@ -48,9 +48,7 @@
             }
         },
         methods: {
-            doSomething: function(arg) {
-                console.log(arg);
-            }
+
         }
     });
 

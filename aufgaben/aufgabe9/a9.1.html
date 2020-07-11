@@ -1,253 +1,344 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>WWW-Navigator</title>
     <style>
-        :root {
-            --button-height: 34px;
-        }
-        body {
-            display: grid;
-            grid-template-columns: 15vw 60vw 25vw;
-            grid-template-rows: minmax(40px, 6vh) minmax(var(--button-height), 7vh) minmax(87vh, max-content);
-            grid-template-areas:
-                    "header header header"
-                    "oberthema oberthema oberthema"
-                    "untermenue dokumentation extern";
+        html, body {
+            height: 100%;
+            width: 100%;
             margin: 0;
+            padding: 0;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url('../bilder/wwwnav.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
+            font-family: 'Roboto', sans-serif;
         }
 
-        #header, #oberthema {
-            background-color: #c24f4f;
-        }
-        #header {
-            grid-area: header;
-        }
-        #oberthema {
-            grid-area: oberthema;
-        }
-        #untermenue, #extern {
-            background-color: #c28283;
-        }
-        #untermenue {
-            grid-area: untermenue;
-        }
-        #extern {
-            grid-area: extern;
-        }
-        #dokumentation {
-            grid-area: dokumentation;
-            background-color: #95d2f3;
-        }
-
-
-        div#oberthema, div#untermenue {
+        #wrapper {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-        }
-        div#oberthema button, div#untermenue button {
-            margin: 4px;
-        }
-        div#oberthema {
-            flex-flow: row;
-            align-items: center;
-        }
-        div#untermenue {
-            flex-flow: column;
-            align-items: flex-start;
-            padding-top: 5px;
+            flex-direction: column;
+            height: 100%;
+            min-height: 100%;
         }
 
-        #header h1 {
-            color: white;
+
+
+        header {
+            display: flex;
+            padding: 5px 5px 5px 20px;
+        }
+
+        #mehrspaltig {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            font-size: 25px;
+        }
+
+        nav {
+            flex: 1;
+
+        }
+
+        article {
+            flex: 4;
+            padding: 20px 20px 20px 20px
+
+        }
+
+        footer {
+
+        }
+        header h1 {
+            font-size: 35px;
+            color : #231F20;
+        }
+
+        header ul li {
+            float: left;
+            padding-right: 20px;
+            padding-top: 10px;
+            list-style-type: none;
+        }
+
+        header ul li a{
+            font-size: 35px;
+            color: #231F20;
+        }
+
+        ul li a:focus{
+            text-decoration: underline;
+        }
+
+        header a {
             text-align: center;
-            margin-top: 0;
-        }
-        #extern p {
+            font-size: 3vh;
+            text-decoration: none;
             color: white;
+            padding: 5px 5px;
+
         }
-        div {
-            padding-left: 10px;
-            padding-right: 10px;
+        header li a:hover {
+            background-color: white;
+            color: #5D5E5F;
+            opacity: 1;
+            transition: 0.5s ease-in-out;
         }
-        button {
-            padding: 5px 25px;
-            height: var(--button-height);
-            border-radius: 10px;
-            font-weight: bold;
-            background-color: #6a70a0;
+
+
+        footer ul li  {
+            display: flex;
+            flex-direction: row;
+            float: left;
+            padding-right: 20px;
+            padding-bottom: 10px;
+            list-style-type: none;
         }
-        button:disabled {
-            background-color: #e1dcda;
+
+        footer a{
+            text-decoration: none;
+            color: white;
+            padding: 10px 10px 10px 10px;
+        }
+        footer a:hover{
+            background-color: white;
+            color: #5D5E5F;
+            opacity: 1;
+            transition: 0.5s ease-in-out;
+        }
+
+        aside ul li{
+            list-style-type: none;
+            padding-bottom: 10px;
+
+        }
+
+        aside a {
+            font-size: 2vh;
+            text-decoration: none;
+            color: white;
+            padding: 5px 5px;
+        }
+
+        aside ul li a{
+            font-size: 30px;
+        }
+
+        aside li a:hover {
+            transition: 0.5s ease-in-out;
+            background-color: white;
+            color: #5D5E5F;
+            transform: scale(1.5);
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-<div id="header"><h1>WWW-Navigator</h1></div>
-<div id="oberthema"><button type=button id="undo" disabled>Zurück</button></div>
-<div id="untermenue"></div>
-<div id="dokumentation"><h2>Willkommen</h2><p>Bitte wählen sie ein Oberthema und dann einen Begriff auf der linken Seite, um sich eine Dokumentation anzeigen zu lassen.</p></div>
-<div id="extern"><p>Hier werden zusätzliche Links zu externen Ressourcen erscheinen</p></div>
+
+<div id="wrapper">
+    <header>
+        <img src ="../bilder/html5.png" width="75em" height="75em" alt="text"/>
+        <!-- https://browsergameita.com/explore/html5-logo-png.html -->
+        <h1>WWW Navigator</h1>
+        <ul>
+            <li><a href="#" id="link_html" class="obermenu">HTML</a></li>
+            <li><a href="#" id="link_css" class="obermenu">CSS</a></li>
+            <li><a href="#" id="link_js" class="obermenu">JavaScript</a></li>
+            <li><a href="#" id="link_other" class="obermenu">Other</a></li>
+        </ul>
+    </header>
+    <div id="mehrspaltig">
+        <aside>
+            <ul id="liste">
+
+            </ul>
+        </aside>
+        <article>
+            <p id="text">            </p>
+        </article>
+
+    </div>
+    <footer>
+
+        <ul>
+            <li><a href="#" onclick="show_html()">Home</a></li>
+            <li><a href="#" onclick="show_other()">News</a></li>
+            <li><a href="#" onclick="show_other()">Contact</a></li>
+            <li><a href="#" onclick="show_other()">About</a></li>
+        </ul>
+    </footer>
+</div>
 
 <script>
-    const mainMenuButtons = document.getElementById('oberthema');
-    const subMenuButtons = document.getElementById('untermenue');
-    const displayArea = document.getElementById('dokumentation');
-    const externSourcesArea = document.getElementById('extern');
-    const undoButton = document.getElementById('undo');
-    (async function() {
-        try {
-            let navigationStructure = await (await fetch('./data/data.json')).json();
-        } catch (error) {
-            console.log(`Fehler beim Laden der Navigation: ${error.name}: ${error.message}`);
-            displayArea.innerHTML = '<h2>Leider konnte die Navigation nicht geladen werden. Bitte versuchen sie es später noch mal.<br>Sollte das Problem weiterhin bestehen, so kontaktieren sie bitte den Webseitenbetreiber.</h2>';
+    const link = document.getElementsByTagName("a");
+
+    const link_html = link[0];
+    const link_css = link[1];
+    const link_js = link[2];
+    const link_other = link[3];
+
+    link_html.addEventListener("click", show_html);
+    link_css.addEventListener("click", show_css);
+    link_js.addEventListener("click", show_js);
+    link_other.addEventListener("click", show_other);
+
+    const text = document.getElementById("text");
+
+    let aktiv = "html";
+
+    async function show_html() {
+        document.getElementById("liste").innerHTML="";
+        aktiv = "html";
+        let fetchResp = await fetch("./content.json");
+        fetchResp = await fetchResp.json();
+
+
+        //Navigationsleiste links
+        for( let index = 0; index < Object.keys(fetchResp.html).length; index++) {
+            let links = Object.keys(fetchResp.html);
+            let tmp_text = links[index];
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML= `
+                <a href='#${tmp_text}' class="untermenu"
+                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    ${links[index]}
+                </a>`;
+            document.getElementById("liste").appendChild(listItem);
         }
 
-        let externSourcesInterval;
-        let parseDisplayArea = parseDisplayAreaFunction();
-        let undoManager = (function() {
-            let undoStack = [];
-            return {
-                undo: function() {
-                    if (undoStack.length > 0) {
-                        let oldState = undoStack.pop();
-                        if (undoStack.length === 0) {
-                            backToStart();
-                            undoButton.disabled = true;
-                        } else {
-                            let stateToReach = undoStack[undoStack.length - 1];
-                            loadSpecificMenus(stateToReach[0], stateToReach[1], oldState[0]);
-                        }
-                    }
-                },
-                add: function(mainmenu, submenu) {
-                    undoStack.push([mainmenu, submenu]);
-                    undoButton.disabled = false;
-                },
-                getCurrent: function() {
-                    return undoStack[undoStack.length - 1];
-                }
-            }
-        })();
-        //Set up mainmenu
-        for(let mmKey in navigationStructure) {
-            //create button for mainmenu heading
-            let mainMenuButton = document.createElement('button');
-            mainMenuButton.innerText = mmKey;
-            mainMenuButton.onclick = () => {
-                history.pushState({main: mmKey, sub: ""}, `Title: ${mmKey}`, mmKey);
-                loadMainmenu(mmKey, mainMenuButton);
-                undoManager.add(mmKey);
-            };
-            oberthema.insertBefore(mainMenuButton, oberthema.lastChild);
+        //html startseite
+        text.innerText = fetchResp.html.Start.value;
+
+        history.replaceState(null, "HTML", "html");
+    }
+
+    async function submenu_Click(tmp_text) {
+        let fetchResp = await fetch("./content.json");
+        fetchResp = await fetchResp.json();
+
+        text.innerText = "Hier soll der text von " + tmp_text + " hin!"
+
+        if(Object.keys(fetchResp).indexOf(aktiv) !== -1 &&
+            Object.keys(Object.values(fetchResp)[Object.keys(fetchResp).indexOf(aktiv)]).indexOf(tmp_text) !== -1) {
+
+            let oberindex = Object.keys(fetchResp).indexOf(aktiv);
+            let unterindex = Object.keys(Object.values(fetchResp)[Object.keys(fetchResp).indexOf(aktiv)]).indexOf(tmp_text);
+            let inhalt = Object.values(Object.values(fetchResp)[oberindex])[unterindex].value;
+
+            if(Object.keys(fetchResp).indexOf(aktiv) ==3 )
+                text.innerHTML = inhalt;
+            else
+                text.innerText = inhalt;
         }
+    }
 
-        undoButton.onclick = undoManager.undo;
+    document.addEventListener("DOMContentLoadad", () =>{
+        window.addEventListener("hashchange", hc);
+        window.addEventListener("popstate", ps);
+    })
 
-        function loadMainmenu(mmKey, mainMenuButton) {
-            while(subMenuButtons.firstChild)
-                subMenuButtons.removeChild(subMenuButtons.firstChild);
+    function hc() {
+        console.log("Hashchange")
+    }
 
-            parseDisplayArea(navigationStructure[mmKey]["_doc"]);
+    function ps() {
+        console.log("popstate")
+    }
 
-            //parseExternSources(navigationStructure[mmKey]["_doc"]);
 
-            for (let i = 0; i < mainMenuButtons.children.length - 1; ++i)
-                mainMenuButtons.children[i].disabled = false;
-            mainMenuButton.disabled =  true;
-            //Set up submenu
-            for (let smKey in navigationStructure[mmKey]) {
+    //ruft die css_inhalte auf mit der ersten seite als
+    async function show_css(event) {
+        aktiv = "css";
+        let fetchResp = await fetch("./content.json");
+        fetchResp = await fetchResp.json();
+        document.getElementById("liste").innerHTML="";
 
-                if(smKey === "_doc")
-                    continue;
+        //event.preventDefault();
 
-                let subMenuButton = document.createElement('button');
-                subMenuButton.innerText = smKey;
-                subMenuButton.onclick = () => {
-                    history.pushState({main: mmKey, sub: smKey}, `Title: ${mmKey} ${smKey}`, `${mmKey}=${smKey}`);
-                    loadSubmenu(mmKey, smKey, subMenuButton);
-                    undoManager.add(mmKey, smKey);
-                };
-                subMenuButtons.appendChild(subMenuButton);
-            }
+        //Navigationsleiste links
+        for( let index = 0; index < Object.keys(fetchResp.css).length; index++) {
+            let links = Object.keys(fetchResp.css);
+            let tmp_text = links[index];
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML= `
+                <a href='#${tmp_text}' class="untermenu"
+                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    ${links[index]}
+                </a>`;
+            document.getElementById("liste").appendChild(listItem);
         }
+        //css startseite
+        text.innerText = fetchResp.css.Start.value;
 
-        function loadSubmenu(mmKey, smKey, subMenuButton) {
 
-            for (let j = 0; j < subMenuButtons.children.length; ++j)
-                subMenuButtons.children[j].disabled = false;
-            subMenuButton.disabled = true;
-            parseDisplayArea(navigationStructure[mmKey][smKey]);
-            //parseExternSources(navigationStructure[mmKey][smKey]);
+        history.replaceState(null, "CSS", "css");
+
+    }
+    async function show_js(event) {
+        aktiv = "javascript";
+        let fetchResp = await fetch("./content.json");
+        fetchResp = await fetchResp.json();
+        document.getElementById("liste").innerHTML="";
+
+        //event.preventDefault();
+
+        //Navigationsleiste links
+        for( let index = 0; index < Object.keys(fetchResp.javascript).length; index++) {
+            let links = Object.keys(fetchResp.javascript);
+            let tmp_text = links[index];
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML= `
+                <a href='#${tmp_text}' class="untermenu"
+                    id="${links[index]}"
+                    onclick='submenu_Click( "${tmp_text}" )'
+                    >
+                        ${links[index]}
+                </a>`;
+            document.getElementById("liste").appendChild(listItem);
         }
+        //JavaScript startseite
+        text.innerText = fetchResp.javascript.Start.value;
 
 
-        function loadSpecificMenus(mmToAchieve, smToAchieve, currentMm) {
-            if (!currentMm)
-                currentMm = undoManager.getCurrent()[0];
-            if (currentMm !== mmToAchieve || !smToAchieve) {
-                let mainMenuButton;
-                for (let i = 0; i < mainMenuButtons.children.length; ++i){
-                    if (mainMenuButtons.children[i].innerText === mmToAchieve) {
-                        mainMenuButton = mainMenuButtons.children[i];
-                    }
-                }
-                loadMainmenu(mmToAchieve, mainMenuButton);
-            }
-            if (smToAchieve) {
-                let subMenuButton;
-                for (let i = 0; i < subMenuButtons.children.length; ++i ){
-                    if (subMenuButtons.children[i].innerText === smToAchieve) {
-                        subMenuButton = subMenuButtons.children[i];
-                    }
-                }
-                loadSubmenu(mmToAchieve, smToAchieve, subMenuButton);
-            } else {
-                for (let i = 0; i < subMenuButtons.children.length; ++i)
-                    subMenuButtons.children[i].disabled = false;
-            }
+        history.replaceState(null, "JavaScript", "js");
+    }
+    async function show_other() {
+        aktiv = "other";
+        let fetchResp = await fetch("./content.json");
+        fetchResp = await fetchResp.json();
+        document.getElementById("liste").innerHTML="";
+
+        //Navigationsleiste links
+        for( let index = 0; index < Object.keys(fetchResp.other).length; index++) {
+            let links = Object.keys(fetchResp.other);
+            let tmp_text = links[index];
+
+            let listItem = document.createElement("li");
+            listItem.innerHTML= `
+                <a href='#${tmp_text}' class="untermenu"
+                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    ${links[index]}
+                </a>`;
+            document.getElementById("liste").appendChild(listItem);
         }
+        //Other startseite
+        text.innerHTML = fetchResp.other.Start.value;
 
+        history.replaceState(null, "Other", "other");
+    }
 
-        function parseDisplayAreaFunction() {
-            let globalNonce;
-            return async function(...args) {
-                const localNonce = globalNonce = {};
-                const parseDisplayArea = function*(content) {
-                    while (displayArea.firstChild)
-                        displayArea.removeChild(displayArea.firstChild);
-                    displayArea.textContent = "Lade Dokumentation";
-                    displayArea.innerHTML = content;
+    window.onload = () => {
+        show_html()
+    };
 
-                }(...args);
-                let resumeValue;
-                for (;;) {
-                    const n = parseDisplayArea.next(resumeValue);
-                    if (n.done)
-                        return n.value;
-                    resumeValue = await n.value;
-                    if (localNonce !== globalNonce)
-                        return;
-                }
-            }
-        }
-
-
-        function backToStart() {
-            while(subMenuButtons.firstChild)
-                subMenuButtons.removeChild(subMenuButtons.firstChild);
-            for (let i = 0; i < mainMenuButtons.children.length - 1; ++i)
-                mainMenuButtons.children[i].disabled = false;
-            displayArea.innerHTML = "<h2>Willkommen</h2><p>Bitte wählen sie ein Oberthema und dann einen Begriff auf der linken Seite, um sich eine Dokumentation anzeigen zu lassen.</p>";
-            externSourcesArea.innerHTML = "<p>Hier werden Links zu externen Ressourcen erscheinen</p>";
-        }
-
-        window.onpopstate = undoManager.undo;
-
-    })();
 </script>
+
 </body>
 </html>
-

@@ -7,7 +7,7 @@
     <link href="../css/a12.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form action=" " method="post" >
+<form action="" method="post" >
 
     <h1>Anmeldung</h1>
 
@@ -37,6 +37,8 @@
         $nutzername = $_POST['nutzername'];
         $passwort = $_POST['passwort'];
 
+        $gefunden = false;
+
         $lines = file( './etc/daten.csv' );
         foreach ($lines as $line_num => $line) {
             list($datei_nutzername, $datei_passwort) = explode(",", $line);
@@ -45,12 +47,14 @@
 
             if ($datei_nutzername == $nutzername && $datei_passwort == hash("sha384", $passwort . '#khaszi398fhlkvkhjewoiu+')) {
                 echo 'Login war erfolgreich! Willkommen zurück ' , $nutzername;
+                $gefunden = true;
                 break;
             } else {
-                echo 'Login war nicht erfolgreich!';
-                break;
+                continue;
             }
-
+        }
+        if(!$gefunden) {
+            echo 'Login war nicht erfolgreich!';
         }
     }
 

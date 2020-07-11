@@ -5,39 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Übung 8.1 </title>
     <style>
-        * {
-            box-sizing: border-box;
+        svg{
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            top: 30%;
+            left: 30%;
         }
+        svg:hover{
+            transform: scale(2);
+        }
+
         rect{
-            fill: palevioletred;
-            width: 100%;
-            height: 100%;
-            transition: transform 2s;
-        }
-        rect:hover{
-            transform: scale(2,2);
-        }
-        text {
-            fill: white;
-        }
-        line {
-            color: white;
+            width: 400px;
+            height: 400px;
+            fill: pink;
+            stroke-width: 3;
             stroke: white;
         }
+        line{
+            fill: black;
+            stroke-width: 3;
+            stroke: white;
+        }
+        text{
+            fill: white;
+            font-size: 5em;
+        }
+
     </style>
 </head>
 <body>
 <h1>SVG Use The Platform</h1>
 
-<svg viewBox="0 0 500 500" width="500px" height="500px">
-    <rect x="10%" y="10%" width="70%" height="70%"/>
-    <text x="15%" y="30%" font-size="50px"> Use </text>
-    <line x1="15%" y1="35%" x2="85%" y2="35%" stroke-width="2.5%"/>
-    <text x="15%" y="50%" font-size="50px"> The </text>
-    <line x1="15%" y1="55%" x2="85%" y2="55%" stroke-width="2.5%"/>
-    <text x="15%" y="70%" font-size="50px"> Platform </text>
-    <line x1="15%" y1="75%" x2="85%" y2="75%" stroke-width="2.5%"/>
+<svg>
 
+    <rect width="400" height="400" class="hintergrund"/>
+    <text x="50" y="90" >Use</text>
+    <line x1="50" y1="100" x2="350" y2="100"/>
+    <text x="50" y="190" >The</text>
+    <line x1="50" y1="200" x2="350" y2="200"/>
+    <text x="50" y="290" >Plattform</text>
+    <line x1="50" y1="300" x2="350" y2="300"/>
 </svg>
 
 </body>

@@ -48,17 +48,17 @@
         </tr>
         <tr>
             <td>
-                <p id="innerHTML"></p>
+                <p id="innerHTML"> </p>
             </td>
             <td>
-                <p id="innerText"></p>
+                <p id="innerText"> </p>
             </td>
             <td>
-                <p id="textContent"></p>
+                <p id="textContent"> </p>
             </td>
             <td class="white">
                 <p>
-                    <p id="outerHTML"></p>
+                    <p id="outerHTML"> </p>
                 </p>
 
             </td>
@@ -103,7 +103,7 @@
         console.log(ende + "-" + start)
         console.log((ende-start) / 1000);
 
-        innerHTML.innerHTML+=" \n Ergebnis:"+(ende-start) / 1000+"s";
+        innerHTML.innerHTML+=" <br> <br> Ergebnis:"+(ende-start) / 1000+"s";
         button_innerHTML.innerHTML="Neustart!";
     })
     button_innerText.addEventListener("click", ()=>{
@@ -115,7 +115,7 @@
         console.log(ende + "-" + start)
         console.log((ende-start) / 1000);
 
-        innerText.innerText+=" \n Ergebnis:"+(ende-start) / 1000+"s";
+        innerText.innerText+=" \n\n Ergebnis:"+(ende-start) / 1000+"s";
         button_innerText.innerText="Neustart!";
     })
     button_textContent.addEventListener("click", ()=>{
@@ -127,7 +127,7 @@
         console.log(ende + "-" + start)
         console.log((ende-start) / 1000);
 
-        textContent.textContent+=" \n Ergebnis:"+(ende-start) / 1000+"s";
+        textContent.textContent+=" <br> Ergebnis:"+(ende-start) / 1000+"s";
         button_textContent.textContent="Neustart!";
     })
     button_outerHTML.addEventListener("click", ()=>{
@@ -139,9 +139,9 @@
 
         const ende = performance.now();
 
-        outerHTML.innerHTML = " \n Ergebnis:"+((ende-start) / 1000)+"s";
+        outerHTML.innerText += " \n \n Ergebnis:"+((ende-start) / 1000)+"s";
 
-        console.log(ende + "-" + start)
+        console.log(ende + "-" + start +"=" )
         console.log((ende-start) / 1000);
         button_outerHTML.hidden=true;
     })

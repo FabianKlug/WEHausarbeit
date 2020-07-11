@@ -2,9 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Array-Wrapper</title>
+    <link href="../css/allgemein.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<p>
+    function arrayWrapper() {
+    let array; // private
+    return {
+    get: function (pos) {
+    return array[pos];
+    },
+    set: function (pos, value) {
+    if (isFunction(pos) || isFunction(value)) {
+    console.log('eventueller Exploit festgestellt');
+    return;
+    } else {
+    array[pos] = value;
+    }
+    function isFunction(functionToCheck)
+    {
+    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    }
+
+    },
+    append: function (value) {
+    if (isFunction(value)) {
+    console.log('eventueller Exploit festgestellt');
+    return;
+    } else {
+    array.push(value);
+    }
+    function isFunction(functionToCheck)
+    {
+    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    }
+
+    },
+
+    }
+    }
+
+</p>
+<hr>
+
+
+<script>
+    function arrayWrapper() {
+        var array; // var damit es privat ist
+        return {
+            get: function (pos) {
+                return array[pos];
+            },
+            set: function (pos, value) {
+                if (isFunction(pos) || isFunction(value)) {
+                    console.log('eventueller Exploit festgestellt');
+                    return;
+                } else {
+                    array[pos] = value;
+                }
+                function isFunction(functionToCheck)
+                {
+                    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+                }
+
+            },
+            append: function (value) {
+                if (isFunction(value)) {
+                    console.log('eventueller Exploit festgestellt');
+                    return;
+                } else {
+                    array.push(value);
+                }
+                function isFunction(functionToCheck)
+                {
+                    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+                }
+
+            },
+
+        }
+    }
+</script>
 
 </body>
 </html>
