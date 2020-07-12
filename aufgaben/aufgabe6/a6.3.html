@@ -172,7 +172,6 @@
 
 <script>
     const link = document.getElementsByTagName("a");
-
     const link_html = link[0];
     const link_css = link[1];
     const link_js = link[2];
@@ -184,7 +183,6 @@
     link_other.addEventListener("click", show_other);
 
     const text = document.getElementById("text");
-
     let aktiv = "html";
 
     async function show_html() {
@@ -196,37 +194,34 @@
         //Navigationsleiste links
         for( let index = 0; index < Object.keys(fetchResp.html).length; index++) {
             let links = Object.keys(fetchResp.html);
-            let tmp_text = links[index];
+            let untermenu_text = links[index];
 
             let listItem = document.createElement("li");
             listItem.innerHTML= `
                 <a href='#' class="untermenu"
-                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    id="${links[index]}" onclick='submenu_Click( "${untermenu_text}" )'>
                     ${links[index]}
                 </a>`;
             document.getElementById("liste").appendChild(listItem);
         }
 
-        //html startseite
+        //html startseite   
         text.innerText = fetchResp.html.Start.value;
     }
 
-    async function submenu_Click(tmp_text) {
+    async function submenu_Click(untermenu_text) {
         let fetchResp = await fetch("./content.json");
         fetchResp = await fetchResp.json();
 
-        text.innerText = "Hier soll der text von " + tmp_text + " hin!"
+        text.innerText = "Hier soll der text von " + untermenu_text + " hin!"
 
         if(Object.keys(fetchResp).indexOf(aktiv) !== -1 &&
-            Object.keys(Object.values(fetchResp)[Object.keys(fetchResp).indexOf(aktiv)]).indexOf(tmp_text) !== -1) {
+            Object.keys(Object.values(fetchResp)[Object.keys(fetchResp).indexOf(aktiv)]).indexOf(untermenu_text) !== -1) {
 
             let oberindex = Object.keys(fetchResp).indexOf(aktiv);
-            let unterindex = Object.keys(Object.values(fetchResp)[Object.keys(fetchResp).indexOf(aktiv)]).indexOf(tmp_text);
+            let unterindex = Object.keys(Object.values(fetchResp)[Object.keys(fetchResp).indexOf(aktiv)]).indexOf(untermenu_text);
             let inhalt = Object.values(Object.values(fetchResp)[oberindex])[unterindex].value;
 
-
-            console.log(Object.keys(fetchResp).indexOf(aktiv))
-            //console.log(Object.keys(Object.values(fetchResp)[Object.keys(fetchResp).indexOf(aktiv)]).indexOf(tmp_text))
             if(Object.keys(fetchResp).indexOf(aktiv) ==3 )
                 text.innerHTML = inhalt;
             else
@@ -244,12 +239,12 @@
         //Navigationsleiste links
         for( let index = 0; index < Object.keys(fetchResp.css).length; index++) {
             let links = Object.keys(fetchResp.css);
-            let tmp_text = links[index];
+            let untermenu_text = links[index];
 
             let listItem = document.createElement("li");
             listItem.innerHTML= `
                 <a href='#' class="untermenu"
-                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    id="${links[index]}" onclick='submenu_Click( "${untermenu_text}" )'>
                     ${links[index]}
                 </a>`;
             document.getElementById("liste").appendChild(listItem);
@@ -266,13 +261,13 @@
         //Navigationsleiste links
         for( let index = 0; index < Object.keys(fetchResp.javascript).length; index++) {
             let links = Object.keys(fetchResp.javascript);
-            let tmp_text = links[index];
+            let untermenu_text = links[index];
 
             let listItem = document.createElement("li");
             listItem.innerHTML= `
                 <a href='#' class="untermenu"
                     id="${links[index]}"
-                    onclick='submenu_Click( "${tmp_text}" )'
+                    onclick='submenu_Click( "${untermenu_text}" )'
                     >
                         ${links[index]}
                 </a>`;
@@ -292,12 +287,12 @@
         //Navigationsleiste links
         for( let index = 0; index < Object.keys(fetchResp.other).length; index++) {
             let links = Object.keys(fetchResp.other);
-            let tmp_text = links[index];
+            let untermenu_text = links[index];
 
             let listItem = document.createElement("li");
             listItem.innerHTML= `
                 <a href='#' class="untermenu"
-                    id="${links[index]}" onclick='submenu_Click( "${tmp_text}" )'>
+                    id="${links[index]}" onclick='submenu_Click( "${untermenu_text}" )'>
                     ${links[index]}
                 </a>`;
             document.getElementById("liste").appendChild(listItem);
