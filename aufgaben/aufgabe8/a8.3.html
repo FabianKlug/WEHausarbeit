@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bezier</title>
+    <link href="../css/allgemein.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            background-color: #222;
+        }
+        h1 {
+            font-size: 25px;
+        }
+        #wrapper {
+            position: absolute;
+            top: 30%;
+            left: 40%;
+        }
+        svg{
+            border: 2px solid white;
+        }
+        path {
+            stroke-width: 3;
+            stroke: black;
+            fill: none;
+            stroke-width: 3px;
+        }
+        circle {
+            fill: yellow;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <h1>Bezierkurve mit Lit-Element</h1>
+
+    <bezier-curve>
+
+    </bezier-curve>
+
+
+</div>
+
+<script type="module">
+    import { LitElement, html, css, svg } from "https://unpkg.com/lit-element/lit-element.js?module";
+
+    class Beziercurve extends LitElement {
+        static get properties() {
+            return {
+                cx1 : Number,
+                cy1: Number,
+
+                cx2 : Number,
+                cy2: Number,
+
+                r: Number,
+
+                m1: Number,
+                m2: Number,
+
+                q1: Number,
+                q2: Number,
+                q3: Number,
+                q4: Number,
+
+                t1: Number,
+                t2: Number,
+
+            }
+        }
+
+        static get styles() {
+            return css`
+                svg{
+                    border: 2px solid white;
+                }
+                path {
+                    stroke-width: 3;
+                    stroke: black;
+                    fill: none;
+                    stroke-width: 3px;
+                }
+                circle {
+                    fill: yellow;
+                }
+            `;
+        }
+
+        render() {
+            return html`
+
+                <button @click="${(event) => this.run()}"> vor Drag hier drücken</button>
+                <br>
+
+
+                <svg width="500" height="500">
+                    <path d="M${this.m1} ${this.m2}
+                            Q${this.q1} ${this.q2} ${this.q3} ${this.q4}
+                            T${this.t1} ${this.t2}" />
+
+
+
+                    <circle class="drag" r="${this.r}" cx="${this.cx1}" cy="${this.cy1}" id="kreis1"/>
+                    <circle class="drag" r="${this.r}" cx="${this.cx2}" cy="${this.cy2}" id="kreis2"/>
+
+                </svg>
+
+            `;
+        }
+
+        constructor() {
+            super();
+
+            this.r = 6;
+            this.cx1 = 10;
+            this.cy1 = 10;
+            this.cx2 = 490;
+            this.cy2 = 490;
+
+            this.m1 = 10;
+            this.m2 = 10;
+            this.q1 = 10;
+            this.q2 = 245;
+            this.q3 = 245;
+            this.q4 = 245;
+            this.t1 = 490;
+            this.t2 = 490;
+        }
+
+        run() {
+            let shadow = this.shadowRoot;
+
+            const drag = shadow.querySelectorAll('.drag');
+            console.log(drag);
+
+            for(let i = 0; i <drag.length; i++) {
+                zuweisung_event(drag[i], i);
+                console.log("for");
+            }
+
+            function zuweisung_event(dragObjekt, index) {
+                let dragElement;
+                let wert;
+
+
+                dragObjekt.addEventListener('mousedown', drag_start);
+                dragObjekt.addEventListener('mousemove', drag);
+                dragObjekt.addEventListener('mouseup', drag_end);
+                dragObjekt.addEventListener('mouseleave', drag_end);
+
+
+
+                function drag_start( event) {
+                    console.log("drag_start");
+                    if (event.target.classList.contains('drag')) {
+                        dragElement = event.target;
+                        wert = getMousePosition(event);
+                        wert.x -= parseFloat(dragElement.getAttribute("cx"));
+                        wert.y -= parseFloat(dragElement.getAttribute("cy"));
+                    }
+                }
+
+                function drag(event) {
+                    console.log("drag");
+                    if (dragElement) {
+                        event.preventDefault();
+                        let coord = getMousePosition(event);
+
+                        console.log(index);
+
+                        switch(index){
+                            case 0:
+                                dragElement.setAttribute("cx", coord.x - wert.x);
+                                dragElement.setAttribute("cy", coord.y - wert.y);
+                                this.cx1 = coord.x - wert.x;
+                                this.cy1 = coord.y - wert.y;
+
+                                console.log(this.cx2)
+
+                                this.m1 = this.cx1;
+                                this.m2 = this.cy1;
+
+                                this.q1 = this.cx1;
+                                this.q2 = this.cy1;
+                                this.q3 = this.cx2;
+                                this.q4 = this.cy2;
+
+                                this.t1 = this.cx1;
+                                this.t2 = this.cy1;
+
+                                console.log("cx : " + this.cx1 + " cy: " + this.cy1);
+                                console.log("m1 : " + this.m1 + " m2: " + this.m2);
+                                console.log("qi : " + this.q1 + " q2: " + this.q2 + " q3: " + this.q3 + " q4: " + this.q4);
+                                console.log("t1 : " + this.t1 + " t2: " + this.t2);
+                                return;
+                            case 1:
+                                dragElement.setAttribute("cx", coord.x - wert.x);
+                                dragElement.setAttribute("cy", coord.y - wert.y);
+                                this.cx2 = coord.x - wert.x;
+                                this.cy2 = coord.y - wert.y;
+
+                                this.m1 = this.cx2;
+                                this.m2 = this.cy2;
+
+                                this.q1 = this.cx2;
+                                this.q2 = this.cy2;
+                                this.q3 = this.cx2;
+                                this.q4 = this.cy2;
+
+                                this.t1 = this.cx1;
+                                this.t2 = this.cy1;
+
+                                console.log("cx : " + this.cx2 + " cy: " + this.cy2);
+                                console.log("m1 : " + this.m1 + " m2: " + this.m2);
+                                console.log("qi : " + this.q1 + " q2: " + this.q2 + " q3: " + this.q3 + " q4: " + this.q4);
+                                console.log("t1 : " + this.t1 + " t2: " + this.t2);
+
+                                return;
+                        }
+                    }
+                }
+                function drag_end(event) {
+                    console.log("drag_end");
+                    dragElement = null;
+                    return;
+                }
+                function getMousePosition(event) {
+                    let ctm = shadow.querySelector('svg').getScreenCTM();
+                    return {
+                        x: (event.clientX - ctm.e) / ctm.a,
+                        y: (event.clientY - ctm.f) / ctm.d
+                    };
+                }
+            }
+        }
+    }
+
+    customElements.define("bezier-curve", Beziercurve);
+</script>
+
+</body>
+</html>
